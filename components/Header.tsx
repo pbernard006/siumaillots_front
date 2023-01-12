@@ -6,7 +6,7 @@ export default function Header(){
     const [isConnected, setIsConnected] = useState(false);
  
     return (<>
-    <div className="w-screen text-xl font-bold">
+    <div className="text-xl font-bold">
         <div className="container mx-auto flex items-start text-center py-8">
             <div className="w-1/12">
 <span>logo</span>
