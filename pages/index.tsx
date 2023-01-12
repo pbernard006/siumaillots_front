@@ -5,6 +5,8 @@ import styles from '../styles/Home.module.css'
 import Header from '../components/Header'
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import Carousel from '../components/Carousel'
+import { useEffect, useState } from 'react'
 
 const josefinSans = Josefin_Sans({
   subsets: ['latin'],
@@ -22,6 +24,8 @@ export default function Home() {
       </Head>
       <main className={josefinSans.className}>
         <Header/>
+        <Carousel/>
+        
       </main>
     </>
   )
