@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Josefin_Sans } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import Header from '../components/Header'
+import HorizontalList from '../components/HorizontalList'
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Carousel from '../components/Carousel'
@@ -25,7 +26,8 @@ export default function Home() {
       <main className={josefinSans.className}>
         <Header/>
         <Carousel/>
-        
+        <HorizontalList title="Meilleures ventes"/>
+        <HorizontalList title="Notre sélection des plus beaux maillots de la saison"/>
       </main>
     </>
   )

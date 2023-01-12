@@ -34,3 +34,7 @@ textarea:focus, input:focus{
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+
+.react-horizontal-scrolling-menu--scroll-container  {
+  overflow-x: hidden;
+}
