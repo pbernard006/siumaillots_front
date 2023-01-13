@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react"
 import Input from "./Input";
 
@@ -6,17 +7,23 @@ export default function Header(){
     const [isConnected, setIsConnected] = useState(false);
  
     return (<>
-    <div className="text-xl font-bold">
+    <div className="text-xl">
         <div className="container mx-auto flex items-start text-center py-8">
             <div className="w-1/12">
-<span>logo</span>
+                <Link href={'/'}>
+                    <span>logo</span>
+                </Link>
             </div>
             <div className="w-9/12 flex items-start">
                 <div className="w-2/12 px-2 py-2">
+                    <Link href={'/clubs'}>
                     <span className="hover-underline-animation">Club</span>
+                    </Link>
                 </div>
                 <div className="w-3/12 px-2 py-2">
+                    <Link href={'/equipes-nationales'}>
                     <span className="hover-underline-animation">Equipe nationale</span>
+                    </Link>
                 </div>
                 <div className="w-7/12 text-start border-input">
                     <Input />
