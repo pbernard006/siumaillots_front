@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react"
 import InputSearch from "./InputSearch";
 
@@ -23,7 +24,9 @@ export default function Header(){
                 </div>
             </div>
             <div className="w-2/12 flex items-start text-right">
+                <Link href={"/mon-compte"}>
             <i className="  far fa-user text-2xl px-2 py-2"></i>
+            </Link>
             <i className="far fa-heart text-2xl px-2 py-2"></i>
             <i className="fas fa-shopping-bag text-2xl px-2 py-2" ></i>
             </div>
