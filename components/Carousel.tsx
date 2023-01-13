@@ -2,8 +2,11 @@
 
 import Image from "next/image";
 import { useEffect } from "react";
-export default function Carousel(){
+import carousel1 from '../public/images/carousel/carousel1.png';
+import carousel2 from '../public/images/carousel/carousel2.jpg';
+import carousel3 from '../public/images/carousel/carousel3.jpg';
 
+export default function Carousel(){
   useEffect(() => {
     const use = async () => {
       (await import('tw-elements')).default;
@@ -37,35 +40,33 @@ export default function Carousel(){
   </div>
   <div className="carousel-inner relative w-full overflow-hidden">
     <div className="carousel-item active relative float-left w-full">
-      <img
-        src="/images/carousel/carousel1.png"
+      <Image
+        src={carousel1}
+        alt="Img carousel"
         className="block w-full"
-        alt="..."
       />
       <div className="carousel-caption hidden md:block absolute text-center">
-        <h5 className="text-xl">En route pour la coupe du monde</h5>
+        <h5 className="text-xl">Retrouvez les maillots des bleus ...</h5>
       </div>
     </div>
     <div className="carousel-item relative float-left w-full">
-      <img
-        src="https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg"
+      <Image
+        src={carousel2}
+        alt="Img carousel"
         className="block w-full"
-        alt="..."
       />
       <div className="carousel-caption hidden md:block absolute text-center">
-        <h5 className="text-xl">Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
+        <h5 className="text-xl">de votre joueur favori ...</h5>
       </div>
     </div>
     <div className="carousel-item relative float-left w-full">
-      <img
-        src="https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg"
+      <Image
+        src={carousel3}
+        alt="Img carousel"
         className="block w-full"
-        alt="..."
       />
       <div className="carousel-caption hidden md:block absolute text-center">
-        <h5 className="text-xl">Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
+        <h5 className="text-xl">ou de votre club favori.</h5>
       </div>
     </div>
   </div>
