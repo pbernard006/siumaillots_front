@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Input from "./Input";
+import InputSearch from "./InputSearch";
 
 export default function Header(){
 
@@ -19,7 +19,7 @@ export default function Header(){
                     <span className="hover-underline-animation">Equipe nationale</span>
                 </div>
                 <div className="w-7/12 text-start border-input">
-                    <Input />
+                    <InputSearch />
                 </div>
             </div>
             <div className="w-2/12 flex items-start text-right">

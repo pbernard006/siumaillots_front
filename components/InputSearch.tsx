@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Input(){
+export default function InputSearch(){
     const [value, setValue] = useState("Rechercher un maillot");
     const [isFirstClick, setIsFirstClick] = useState(true);
 
