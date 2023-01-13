@@ -4,6 +4,7 @@ import { Josefin_Sans } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import Header from '../components/Header'
 import HorizontalList from '../components/HorizontalList'
+import ImagesHomepage from '../components/ImagesHomepage'
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Carousel from '../components/Carousel'
@@ -28,6 +29,7 @@ export default function Home() {
         <Carousel/>
         <HorizontalList title="Meilleures ventes"/>
         <HorizontalList title="Notre sélection des plus beaux maillots de la saison"/>
+        <ImagesHomepage/>
       </main>
     </>
   )

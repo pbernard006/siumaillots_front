@@ -11,7 +11,7 @@ export function Card({ title, itemId }: { title: string; itemId: string }) {
     <div
       role="button"
       tabIndex={0}
-      className="card bg-gray-300 border-2 border-black w-52 mx-2.5 rounded-lg"	
+      className="card border-2 border-black w-52 mx-2.5 rounded-lg"	
     >
       <div className=" h-44 flex justify-center items-center">
       <Image

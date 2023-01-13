@@ -15,7 +15,7 @@ const getItems = () =>
     .map((_, ind) => ({ id: getId(ind) }));
 
 
-    function HorizontalList({title}: { title: string}) {
+function HorizontalList({title}: { title: string}) {
   const [items] = React.useState(getItems);
   const { disableScroll, enableScroll } = usePreventBodyScroll();
 
