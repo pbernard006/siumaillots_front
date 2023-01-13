@@ -7,10 +7,12 @@ export default function Header(){
     const [isConnected, setIsConnected] = useState(false);
  
     return (<>
-    <div className="text-xl font-bold">
+    <div className="text-xl">
         <div className="container mx-auto flex items-start text-center py-8">
             <div className="w-1/12">
-<span>logo</span>
+                <Link href={'/'}>
+                    <span>logo</span>
+                </Link>
             </div>
             <div className="w-9/12 flex items-start">
                 <div className="w-2/12 px-2 py-2">
