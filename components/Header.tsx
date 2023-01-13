@@ -29,7 +29,7 @@ export default function Header(){
                     <Input />
                 </div>
             </div>
-            <div className="w-2/12 flex items-start text-right">
+            <div className="w-2/12 flex justify-center">
             <i className="  far fa-user text-2xl px-2 py-2"></i>
             <i className="far fa-heart text-2xl px-2 py-2"></i>
             <i className="fas fa-shopping-bag text-2xl px-2 py-2" ></i>
