@@ -38,3 +38,14 @@ textarea:focus, input:focus{
 .react-horizontal-scrolling-menu--scroll-container  {
   overflow-x: hidden;
 }
+
+.vertical-center{
+  display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.bg-stadium{
+  background-image: url("/images/background/stadium.jpg");
+  background-position: center;
+}
