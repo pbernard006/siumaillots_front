@@ -6,7 +6,8 @@ import LeaguesList from "../components/LeaguesList";
 
 const josefinSans = Josefin_Sans({
     subsets: ['latin'],
-    weight: ['300']
+    weight: ['300'],
+    display: 'swap'
   });
 
 export default function Clubs(){
