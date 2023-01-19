@@ -3,10 +3,6 @@ import { VisibilityContext } from "react-horizontal-scrolling-menu";
 import Image from 'next/image'
 
 export function Card({ title, itemId }: { title: string; itemId: string }) {
-  const visibility = React.useContext(VisibilityContext);
-
-  const visible = visibility.isItemVisible(itemId);
-
   return (
     <div
       role="button"
@@ -23,7 +19,14 @@ export function Card({ title, itemId }: { title: string; itemId: string }) {
       </div>
       <hr className="w-1/2 m-auto mb-2"/>
       <div>{title}</div>
-      <div className="bg-white rounded-lg	p-px mb-1 mr-1	ml-40	">
+      <div className="rounded-lg p-px m-1 flex items-center justify-between">
+        <Image
+        src="/images/maillots/favori.png"
+        alt="Maillot"
+        width={25}
+        height={2}
+        className="opacity-25 hover:opacity-100"
+        />
         30€
       </div>
     </div>
