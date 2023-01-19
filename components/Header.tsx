@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react"
-import Input from "./Input";
+import InputSearch from "./InputSearch";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Header(){
 
@@ -26,15 +27,17 @@ export default function Header(){
                     </Link>
                 </div>
                 <div className="w-7/12 text-start border-input">
-                    <Input />
+                    <InputSearch />
                 </div>
             </div>
-            <div className="w-2/12 flex justify-center">
-                <i className="far fa-user text-2xl px-2 py-2"></i>
-                <Link href={'/favorites'}>
-                    <i className="far fa-heart text-2xl px-2 py-2"></i>
-                </Link>
-                <i className="fas fa-shopping-bag text-2xl px-2 py-2" ></i>
+            <div className="w-2/12 flex items-start text-right">
+                <Link href={"/mon-compte"}>
+            <i className="  far fa-user text-2xl px-2 py-2"></i>
+            </Link>
+            Link href={'/favorites'}>
+            <i className="far fa-heart text-2xl px-2 py-2"></i>
+            </Link>
+            <i className="fas fa-shopping-bag text-2xl px-2 py-2" ></i>
             </div>
         </div>
     </div>
