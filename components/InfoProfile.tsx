@@ -1,27 +1,36 @@
 import HeaderProfile from "./HeaderProfile";
 import Input from "./Input";
 import ElementsProfile from "./ElementsProfile";
+import Button from "./Button";
+import { useState } from "react";
 
 export default function InfoProfile(){
+    const [isValueChanged, setIsValueChanged] = useState(false);
 
     return (
         <div>
-            <HeaderProfile />
             <div className="mt-20">
-                <div className="w-1/3 mx-auto my-10 border-input">
-                    <input  value='Quentin' className="text-center w-full px-2 py-2 font-normal text-lg"/>
-                </div>
-                <div className="w-1/3 m-auto my-10 border-input">
-                    <input type='text' value='Marque' className="text-center w-full px-2 py-2 font-normal text-lg uppercase"/>
-                </div>
-                <div className="w-1/3 m-auto my-10 border-input">
-                    <input type='text' value='quentinm2000@hotmail.fr' className="text-center w-full px-2 py-2 font-normal text-lg"/>
-                </div>
-                <div className="w-1/3 m-auto my-10 border-input">
-                    <input type='text' value='18/07/2000' className="text-center w-full px-2 py-2 font-normal text-lg"/>
+                
+                <div className="mx-auto w-10/12 my-10">
+                    <span>{"prénom :".toUpperCase()}</span>
+                    <div className="border-input mb-4">
+                        <Input type="firstname" data="Quentin" setIsValueChanged={setIsValueChanged}/>
+                    </div>
+                    <span>{"nom :".toUpperCase()}</span>
+                    <div className="border-input mb-4">
+                        <Input type="lastname" data="Marque" setIsValueChanged={setIsValueChanged}/>
+                    </div>
+                    <span>{"adresse email :".toUpperCase()}</span>
+                    <div className="border-input mb-4">
+                        <Input type="email" data="quentinmarque@gmail.com" setIsValueChanged={setIsValueChanged}/>
+                    </div>
+                    <span>{"date de naissance :".toUpperCase()}</span>
+                    <div className="border-input mb-4">
+                        <Input type="birthdate" data="01/01/2000" setIsValueChanged={setIsValueChanged}/>
+                    </div>
+                <Button valueChanged={isValueChanged}/>
                 </div>
             </div>
-        <ElementsProfile name="Enregistrer"/>
         </div>
     )   
 }

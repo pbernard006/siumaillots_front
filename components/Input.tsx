@@ -1,21 +1,46 @@
-import { useState } from "react"
+import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-export default function Input(){
-    const [value, setValue] = useState("Rechercher un maillot");
-    const [isFirstClick, setIsFirstClick] = useState(true);
+export default function Input({
+  type,
+  data,
+  setIsValueChanged,
+}: {
+  type: string;
+  data: string;
+  setIsValueChanged: Dispatch<SetStateAction<boolean>>;
+}) {
+  const [isFirstClick, setIsFirstClick] = useState(true);
+  const [value, setValue] = useState("");
 
-    const editValue = (event: any) => {
-        setValue(event.target.value)
+  useEffect(() => {
+    setValue(data);
+  }, []);
+
+  const editValue = (event: any) => {
+    if (data != event.target.value) {
+      setIsValueChanged(true);
+    } else {
+      setIsValueChanged(false);
     }
-    const removeValue = (event: any) => {
-        if(isFirstClick){
-            setIsFirstClick(false);
-            setValue("");
-        }else{
-            event.target.select();
-        }
+    setValue(event.target.value);
+  };
+  const removeValue = (event: any) => {
+    if (isFirstClick) {
+      setIsFirstClick(false);
+      event.target.selectionStart = event.target.selectionEnd =
+        event.target.value.length;
+    } else {
+      event.target.select();
     }
-    return (
-        <input type={"text"} value={value} onClick={removeValue} onChange={editValue} className="w-full px-2 py-2 font-normal text-lg"/>
-    )
+  };
+  return (
+    <input
+      type={"text"}
+      value={value}
+      onClick={removeValue}
+      onChange={editValue}
+      className="w-full px-2 py-2 font-normal text-lg"
+    />
+  );
 }

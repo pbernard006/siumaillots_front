@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react"
 import InputSearch from "./InputSearch";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Header(){
 

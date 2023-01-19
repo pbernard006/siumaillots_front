@@ -6,7 +6,6 @@ import Header from '../components/Header'
 import HorizontalList from '../components/HorizontalList'
 import ImagesHomepage from '../components/ImagesHomepage'
 
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import Carousel from '../components/Carousel'
 import { useEffect, useState } from 'react'
 
