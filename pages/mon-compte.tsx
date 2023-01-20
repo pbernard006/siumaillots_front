@@ -11,6 +11,7 @@ import Orders from "../components/Orders";
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   weight: ["300"],
+  display: 'swap'
 });
 
 export default function MyAccount() {
@@ -56,7 +57,7 @@ export default function MyAccount() {
       <main className={josefinSans.className}>
         <Header />
         <div className="container mx-auto flex">
-          <div className="w-3/12">
+          <div className="w-3/12 ml-4">
             <HeaderProfile />
             <div onClick={() => displaySubMenu("informations")}>
               <ElementsProfile
