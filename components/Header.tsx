@@ -32,14 +32,16 @@ export default function Header() {
               <InputSearch />
             </div>
           </div>
-          <div className="w-2/12 flex items-start text-right">
+          <div className="w-2/12 flex justify-center">
             <Link href={"/mon-compte"}>
-              <i className="  far fa-user text-2xl px-2 py-2"></i>
+                <i className="  far fa-user text-2xl px-2 py-2"></i>
             </Link>
-            <Link href={"/favorites"}>
-              <i className="far fa-heart text-2xl px-2 py-2"></i>
+            <Link href={'/favoris'}>
+                <i className="far fa-heart text-2xl px-2 py-2"></i>
             </Link>
-            <i className="fas fa-shopping-bag text-2xl px-2 py-2"></i>
+            <Link href={'/panier'}>
+                <i className="fas fa-shopping-bag text-2xl px-2 py-2"></i>
+            </Link>
           </div>
         </div>
       </div>
