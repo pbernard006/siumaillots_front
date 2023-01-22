@@ -1,10 +1,12 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import InputSearch from "./InputSearch";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { UserContext } from "../contexts/UserContext";
 
 export default function Header() {
   const [isConnected, setIsConnected] = useState(false);
+  const { id, setId, token, setToken } = useContext(UserContext);
 
   return (
     <>
@@ -33,14 +35,14 @@ export default function Header() {
             </div>
           </div>
           <div className="w-2/12 flex justify-center">
-            <Link href={"/mon-compte"}>
-                <i className="  far fa-user text-2xl px-2 py-2"></i>
+            <Link href={`${id == "" ? "/connexion" : "/mon-compte"}`}>
+              <i className="  far fa-user text-2xl px-2 py-2"></i>
             </Link>
-            <Link href={'/favoris'}>
-                <i className="far fa-heart text-2xl px-2 py-2"></i>
+            <Link href={"/favoris"}>
+              <i className="far fa-heart text-2xl px-2 py-2"></i>
             </Link>
-            <Link href={'/panier'}>
-                <i className="fas fa-shopping-bag text-2xl px-2 py-2"></i>
+            <Link href={"/panier"}>
+              <i className="fas fa-shopping-bag text-2xl px-2 py-2"></i>
             </Link>
           </div>
         </div>

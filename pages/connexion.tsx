@@ -1,8 +1,7 @@
 import Head from "next/head";
 import { Josefin_Sans } from "@next/font/google";
-import styles from "../styles/Home.module.css";
 import Header from "../components/Header";
-import LeaguesList from "../components/LeaguesList";
+import HubLogin from "../components/HubLogin";
 
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
@@ -10,7 +9,7 @@ const josefinSans = Josefin_Sans({
   display: "swap",
 });
 
-export default function Clubs() {
+export default function Connexion() {
   return (
     <>
       <Head>
@@ -21,7 +20,7 @@ export default function Clubs() {
       </Head>
       <main className={josefinSans.className}>
         <Header />
-        <LeaguesList />
+        <HubLogin />
       </main>
     </>
   );
