@@ -45,7 +45,7 @@ export default function Favorites(){
                         <h4 className="ml-3"> 90 €</h4>
                     </div>
                     <div className="mt-5">
-                        <button className="bg-black m-5 w-full text-white rounded-lg  ">
+                        <button className="bg-black m-5 w-full font-bold text-white rounded-lg  ">
                             Procéder au paiement
                         </button>
                     </div>

@@ -7,9 +7,9 @@ export function JerseyBasket({ title, itemId }: { title: string; itemId: string 
     <div
       role="button"
       tabIndex={0}
-      className="card border-2 border-blackmx-2.5 rounded-lg flex"
+      className="card border-2 border-black mx-2.5 rounded-lg flex"
     >
-      <div className=" m-5   justify-start w-1/5	">
+      <div className=" m-5 justify-start w-1/5	">
         <Link href={'/maillot'}>
             <Image
             src="/images/maillots/maillot.png"
