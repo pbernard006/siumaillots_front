@@ -5,12 +5,12 @@ import styles from "../styles/Home.module.css";
 import Header from "../components/Header";
 import HorizontalList from "../components/HorizontalList";
 import ImagesHomepage from "../components/ImagesHomepage";
+import { UserContext } from "../contexts/UserContext";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Carousel from "../components/Carousel";
-import { useEffect, useState } from "react";
-
-
+import { useContext, useEffect, useState } from "react";
+import fetch from "isomorphic-unfetch";
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   weight: ["300"],
@@ -18,6 +18,18 @@ const josefinSans = Josefin_Sans({
 });
 
 export default function Home() {
+  const getUsers = async () => {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/users", {
+      method: "GET",
+    });
+    const dt = await response.json();
+    console.log(dt);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <>
       <Head>
