@@ -10,7 +10,6 @@ import { UserContext } from "../contexts/UserContext";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Carousel from "../components/Carousel";
 import { useContext, useEffect, useState } from "react";
-import fetch from "isomorphic-unfetch";
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   weight: ["300"],

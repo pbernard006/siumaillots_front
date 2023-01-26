@@ -5,7 +5,7 @@ export default function LeaguesList() {
     <>
         <div className="vertical-center bg-stadium h-screen">
             <div className="w-screen  h-screen bg-gray-50 bg-opacity-40 ">
-                <div className="container text-center mt-20">
+                <div className="text-center mt-20">
                     <div className="text-white text-3xl font-bold text-center">
                         <h1>Dans quel championnat joue ton équipe ?</h1>
                     </div>
