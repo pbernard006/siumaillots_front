@@ -44,7 +44,7 @@ export default function Login() {
       <div className="container mx-auto">
         <div>
           <span className={`${error ? "text-red-700" : "hidden"}`}>
-            Une erreur est survenue, veuillez réessayer
+            Une erreur est survenue, veuillez réessayer.
           </span>
         </div>
         <span className="uppercase">adresse email</span>
