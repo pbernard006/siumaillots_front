@@ -6,6 +6,7 @@ import { JerseyBasket } from "../components/JerseyBasket";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { JerseyFromBasket } from "../models/JerseyFromBasket";
+import Router from "next/router";
 
 const josefinSans = Josefin_Sans({
     subsets: ['latin'],
@@ -21,18 +22,13 @@ const josefinSans = Josefin_Sans({
 //     .map((_, ind) => ({ id: getId(ind) }));
 
 
-
-    
-
-
 export default function Panier(){
     // const [items] = React.useState(getItems);
     // const [jerseysList,setJerseysList] = useState<Jersey[]>([]);
     const [jerseys,setJerseys] = useState<JerseyFromBasket[]>([]);
-
+    const [basketId, setBasketId] = useState("");
     const [isLoading,setIsLoading] = useState(true);
     const token = Cookies.get('token');
-
 
     const getJerseys = async () => {
         const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/current-basket", {
@@ -42,10 +38,32 @@ export default function Panier(){
         },
         });
         const dt = await response.json();
-
+        setBasketId(dt.basketId);
         setJerseys(dt.jerseys);  
         setIsLoading(false);
     };
+
+    const payBasket = async() => {
+        const order = {
+            orderId: basketId
+        }
+        const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/create-checkout-session", {
+            method: "POST",
+            headers: {
+              "Authorization" : `Bearer ${token}`
+          },
+          body: JSON.stringify(order),
+        });
+
+        const result = await response.json();
+        if (response.status == 200) {
+            console.log(result);
+            const url = result.url;
+            Router.push(url);
+          } else {
+            // Erreur
+          }
+    }
     
     useEffect(() => {
     getJerseys();
@@ -83,10 +101,12 @@ export default function Panier(){
                     <div className="ml-40">
                         <div className="flex m-5 justify-center m-auto font-bold">
                             <h4 className="uppercase ">Total :  </h4>
-                            <h4 className="ml-3"> 90 €</h4>
+                            <h4 className="ml-3"> TODO :CALCULER LE PRIX TOTAL</h4>
                         </div>
                         <div className="mt-5">
-                            <button className="bg-black m-5 w-full font-bold text-white rounded-lg  ">
+                            <button 
+                            onClick={payBasket}
+                            className="bg-black m-5 w-full font-bold text-white rounded-lg">
                                 Procéder au paiement
                             </button>
                         </div>
