@@ -3,10 +3,12 @@ import { useState, useContext } from "react";
 import InputSearch from "./InputSearch";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { UserContext } from "../contexts/UserContext";
+import Cookies from "js-cookie";
 
 export default function Header() {
   const [isConnected, setIsConnected] = useState(false);
-  const { id, setId, token, setToken } = useContext(UserContext);
+  // const { id, setId, token, setToken } = useContext(UserContext);
+  const token = Cookies.get('token');
 
   return (
     <>
@@ -35,7 +37,7 @@ export default function Header() {
             </div>
           </div>
           <div className="w-2/12 flex justify-center">
-            <Link href={`${id == "" ? "/connexion" : "/mon-compte"}`}>
+            <Link href={`${!token ? "/connexion" : "/mon-compte"}`}>
               <i className="  far fa-user text-2xl px-2 py-2"></i>
             </Link>
             <Link href={"/panier"}>

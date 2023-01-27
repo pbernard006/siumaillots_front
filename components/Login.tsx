@@ -4,6 +4,7 @@ import InputLogin from "./InputLogin";
 import { UserContext } from "../contexts/UserContext";
 import Link from "next/link";
 import Router from "next/router";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const { id, setId, token, setToken } = useContext(UserContext);
@@ -33,6 +34,7 @@ export default function Login() {
       setToken(result.token);
       setError(false);
 
+      Cookies.set('token', result.token);
       Router.push("/");
     } else {
       setError(true);

@@ -9,7 +9,6 @@ export function Card({ id, title, price, srcImage }: { id: string; title: string
       tabIndex={0}
       className="card border-2 border-black w-52 mx-2.5 rounded-lg"
     >
-      <h5>{id}</h5>
       <Link href={"/maillot?id=" + `${id}`}>
         <div className=" h-44 flex justify-center items-center">
           <img
