@@ -1,8 +1,10 @@
 import Head from "next/head"
 import React from "react";
-import { Josefin_Sans } from '@next/font/google'
+import { Josefin_Sans } from "@next/font/google";
 import Header from "../components/Header";
 import { Card } from "../components/Card";
+import { useEffect, useState } from "react";
+import { Jersey } from "../models/Jersey";
 
 const josefinSans = Josefin_Sans({
     subsets: ['latin'],
@@ -18,7 +20,39 @@ const getItems = () =>
     .map((_, ind) => ({ id: getId(ind) }));
 
 export default function Maillots(){
-    const [items] = React.useState(getItems);
+
+    const [jerseysList,setJerseysList] = useState<Jersey[]>([]);
+    const [isLoading,setIsLoading] = useState(true);
+
+
+    const getAllJerseys = async () => {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/jerseys", {
+          method: "GET",
+        });
+        const dt = await response.json();
+
+        let jerseys = [];
+        for(let i=0; i<dt["hydra:member"].length; i++){
+            let jersey = {
+                id: dt["hydra:member"][i].id,
+                team_id: dt["hydra:member"][i].team_id,
+                year: dt["hydra:member"][i].year,
+                model: dt["hydra:member"][i].model,
+                name: dt["hydra:member"][i].name,
+                price: dt["hydra:member"][i].price,
+                filePath: dt["hydra:member"][i].filePath
+            }
+            jerseys.push(jersey);      
+        }
+
+        setJerseysList(jerseys);  
+        setIsLoading(false);
+    };
+    
+    useEffect(() => {
+    getAllJerseys();
+    }, []);
+
 
     return (
         <>
@@ -39,15 +73,18 @@ export default function Maillots(){
                 </select>
             </div>
 
-            <div className="grid grid-cols-5 gap-y-5 ml-20 justify-around text-center">
-                {items.map(({ id }) => (
-                    <Card
-                        title={id}
-                        itemId={id}
-                        key={id}
-                    />
-                ))}
-            </div>
+            {!isLoading && (
+                <div className="grid grid-cols-5 gap-y-5 ml-20 justify-around text-center">
+                    {jerseysList.map((jersey) => (
+                        <Card
+                        id={jersey.id}
+                        title={jersey.name}
+                        srcImage={process.env.NEXT_PUBLIC_API_HOST + jersey.filePath}
+                        price={jersey.price}
+                        />
+                    ))}
+                </div>
+            )}
         </main>
         </>
     )
