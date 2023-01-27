@@ -16,7 +16,6 @@ export function JerseyBasket({ id, size, quantity }: { id: string; size: string,
     const dt = await response.json();
     setJersey(dt);
     setIsLoading(false);
-    console.log(jersey);
   };
 
   useEffect(() => {
@@ -49,7 +48,7 @@ export function JerseyBasket({ id, size, quantity }: { id: string; size: string,
               <h5 className="font-bold">{jersey?.name}</h5>
             </Link>
             <div className="rounded-lg p-px">
-              {jersey?.price}
+              {jersey?.price} €
             </div>
             <h4>Taille: {size}</h4>
             <h4>Quantité: {quantity}</h4>
