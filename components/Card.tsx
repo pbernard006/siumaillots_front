@@ -2,17 +2,18 @@ import React from "react";
 import Image from 'next/image'
 import Link from "next/link";
 
-export function Card({ title, itemId }: { title: string; itemId: string }) {
+export function Card({ id, title, price, srcImage }: { id: string; title: string; price: string; srcImage: string}) {
   return (
     <div
       role="button"
       tabIndex={0}
       className="card border-2 border-black w-52 mx-2.5 rounded-lg"
     >
-      <Link href={'/maillot'}>
+      <h5>{id}</h5>
+      <Link href={"/maillot?id=" + `${id}`}>
         <div className=" h-44 flex justify-center items-center">
-          <Image
-          src="/images/maillots/maillot.png"
+          <img
+          src={srcImage}
           alt="Maillot"
           width={100}
           height={100}
@@ -29,7 +30,7 @@ export function Card({ title, itemId }: { title: string; itemId: string }) {
         height={2}
         className="opacity-25 hover:opacity-100"
         />
-        30€
+        {price}
       </div>
     </div>
   );

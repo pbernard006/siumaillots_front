@@ -32,10 +32,11 @@ export default function Favorites(){
             <div className="grid grid-cols-5 gap-y-5 ml-20 text-center">
                 {items.map(({ id }) => (
                     <Card
+                        id={id}
                         title={id}
-                        itemId={id}
-                        key={id}
-                        />
+                        srcImage="/images/maillots/maillot.png"
+                        price='30€'
+                    />
                     ))}
             </div>
         </main>

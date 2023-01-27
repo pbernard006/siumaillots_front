@@ -30,9 +30,10 @@ function HorizontalList({title}: { title: string}) {
             >
             {items.map(({ id }) => (
                 <Card
-                title={id}
-                itemId={id} // NOTE: itemId is required for track items
-                key={id}
+                  id={id}
+                  title={id}
+                  srcImage="/images/maillots/maillot.png"
+                  price='30€'
                 />
             ))}
             </ScrollMenu>
