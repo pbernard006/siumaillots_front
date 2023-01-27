@@ -23,13 +23,6 @@ export function Card({ id, title, price, srcImage }: { id: string; title: string
       <hr className="w-1/2 m-auto mb-2"/>
       <div>{title}</div>
       <div className="rounded-lg p-px m-1 flex items-center justify-between">
-        <Image
-        src="/images/maillots/favori.png"
-        alt="Maillot"
-        width={25}
-        height={2}
-        className="opacity-25 hover:opacity-100"
-        />
         {price}
       </div>
     </div>

@@ -82,13 +82,6 @@ export default function Maillot(){
                             <button className="bg-black text-white rounded-lg w-4/5	">
                                 Ajouter au panier
                             </button>
-                            <Image
-                            src="/images/maillots/favori.png"
-                            alt="Maillot"
-                            width={25}
-                            height={2}
-                            className="opacity-25 hover:opacity-100"
-                            />
                         </div>
                     </div>
                 </div>

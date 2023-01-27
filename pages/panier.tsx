@@ -17,7 +17,7 @@ const getItems = () =>
     .fill(0)
     .map((_, ind) => ({ id: getId(ind) }));
 
-export default function Favorites(){
+export default function Panier(){
     const [items] = React.useState(getItems);
     return (
         <>
