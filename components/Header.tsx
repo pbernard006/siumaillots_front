@@ -38,9 +38,6 @@ export default function Header() {
             <Link href={`${id == "" ? "/connexion" : "/mon-compte"}`}>
               <i className="  far fa-user text-2xl px-2 py-2"></i>
             </Link>
-            <Link href={"/favoris"}>
-              <i className="far fa-heart text-2xl px-2 py-2"></i>
-            </Link>
             <Link href={"/panier"}>
               <i className="fas fa-shopping-bag text-2xl px-2 py-2"></i>
             </Link>
