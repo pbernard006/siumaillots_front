@@ -2,9 +2,9 @@ import InputLogin from "./InputLogin";
 import { UserContext } from "../contexts/UserContext";
 import Router from "next/router";
 import { useContext, useState } from "react";
+import Cookies from "js-cookie";
 
 export default function Register() {
-  const { id, setId, token, setToken } = useContext(UserContext);
   const [loginValue, setLoginValue] = useState("");
   const [firstNameValue, setFirstNameValue] = useState("");
   const [lastNameValue, setLastNameValue] = useState("");
@@ -34,8 +34,6 @@ export default function Register() {
       body: JSON.stringify(credentials),
     });
     const result = await response.json();
-    console.log(result);
-    console.log(response.status);
 
     if (response.status == 201) {
       // Connexion
@@ -57,11 +55,23 @@ export default function Register() {
       const loginResult = await loginResponse.json();
 
       if (loginResponse.status == 200) {
-        console.log(loginResult);
-        setId("2");
-        setToken(loginResult.token);
+        // Get userId
+        const userIdResponse = await fetch(
+          process.env.NEXT_PUBLIC_API_HOST + "/users/current",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${loginResult.token}`,
+            },
+          }
+        );
+        const userIdResult = await userIdResponse.json();
+
         setError(false);
 
+        Cookies.set("id", userIdResult.id);
+        Cookies.set("token", loginResult.token);
         Router.push("/");
       } else {
         setError(true);

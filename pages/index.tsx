@@ -22,7 +22,6 @@ export default function Home() {
       method: "GET",
     });
     const dt = await response.json();
-    console.log(dt);
   };
 
   useEffect(() => {

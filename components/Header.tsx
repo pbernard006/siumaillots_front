@@ -7,8 +7,7 @@ import Cookies from "js-cookie";
 
 export default function Header() {
   const [isConnected, setIsConnected] = useState(false);
-  // const { id, setId, token, setToken } = useContext(UserContext);
-  const token = Cookies.get('token');
+  const token = Cookies.get("token");
 
   return (
     <>
