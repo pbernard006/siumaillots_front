@@ -7,8 +7,6 @@ import Router from "next/router";
 import Cookies from "js-cookie";
 
 export default function Login() {
-  const { id, setId, token, setToken } = useContext(UserContext);
-
   const [loginValue, setLoginValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [error, setError] = useState(false);
@@ -29,12 +27,23 @@ export default function Login() {
     const result = await response.json();
 
     if (response.status == 200) {
-      console.log(result);
-      setId("2");
-      setToken(result.token);
+      // Get userId
+      const userIdResponse = await fetch(
+        process.env.NEXT_PUBLIC_API_HOST + "/users/current",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${result.token}`,
+          },
+        }
+      );
+      const userIdResult = await userIdResponse.json();
+
       setError(false);
 
-      Cookies.set('token', result.token);
+      Cookies.set("id", userIdResult.id);
+      Cookies.set("token", result.token);
       Router.push("/");
     } else {
       setError(true);

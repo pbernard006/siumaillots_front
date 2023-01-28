@@ -4,21 +4,56 @@ import ElementsProfile from "../components/ElementsProfile";
 import InfoProfile from "../components/InfoProfile";
 import { Josefin_Sans } from "@next/font/google";
 import Head from "next/head";
-import { useRef, useState } from "react";
+import { UserContext } from "../contexts/UserContext";
+import { useRef, useState, useContext, useEffect } from "react";
 import { MouseEventHandler } from "react";
 import Address from "../components/Address";
 import Orders from "../components/Orders";
+import { User } from "../models/User";
+import Cookies from "js-cookie";
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   weight: ["300"],
-  display: 'swap'
+  display: "swap",
 });
 
 export default function MyAccount() {
+  const [isLoading, setIsLoading] = useState(true);
   const [subMenu, setSubMenu] = useState("informations");
   const [isInformationsSelected, setIsInformationsSelected] = useState(true);
   const [isAddressSelected, setIsAddressSelected] = useState(false);
   const [isOrdersSelected, setIsOrdersSelected] = useState(false);
+  const { user, setUser, userEdit, setUserEdit } = useContext(UserContext);
+  const token = Cookies.get("token");
+
+  const getUserInformations = async () => {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_HOST + `/users/current`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const dt = await response.json();
+
+    let newUser: User = new User();
+    user.addresses = [];
+    user.email = dt.email;
+    user.firstName = dt.firstName;
+    user.lastName = dt.lastName;
+    user.orders = [];
+    user.roles = [];
+    user.id = dt.id;
+
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getUserInformations();
+  }, [isLoading]);
 
   function displaySubMenu(subMenu: string) {
     setSubMenu(subMenu);
@@ -45,7 +80,6 @@ export default function MyAccount() {
 
     return undefined;
   }
-  //#9b9b9b
   return (
     <>
       <Head>
@@ -56,35 +90,42 @@ export default function MyAccount() {
       </Head>
       <main className={josefinSans.className}>
         <Header />
-        <div className="container mx-auto flex">
-          <div className="w-3/12 ml-4">
-            <HeaderProfile />
-            <div onClick={() => displaySubMenu("informations")}>
-              <ElementsProfile
-                name="Mes informations"
-                selected={isInformationsSelected}
-              />
+        {!isLoading && (
+          <div className="container mx-auto flex">
+            <div className="w-3/12 ml-4">
+              <HeaderProfile />
+              <div onClick={() => displaySubMenu("informations")}>
+                <ElementsProfile
+                  name="Mes informations"
+                  selected={isInformationsSelected}
+                />
+              </div>
+              <div onClick={() => displaySubMenu("address")}>
+                <ElementsProfile
+                  name="Mes adresses"
+                  selected={isAddressSelected}
+                />
+              </div>
+              <div onClick={() => displaySubMenu("orders")}>
+                <ElementsProfile
+                  name="Mes commandes"
+                  selected={isOrdersSelected}
+                />
+              </div>
+              <ElementsProfile name="Déconnexion" selected={false} />
             </div>
-            <div onClick={() => displaySubMenu("address")}>
-              <ElementsProfile
-                name="Mes adresses"
-                selected={isAddressSelected}
-              />
+            <div className="w-9/12">
+              {subMenu == "informations" && (
+                <InfoProfile
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                />
+              )}
+              {subMenu == "address" && <Address />}
+              {subMenu == "orders" && <Orders />}
             </div>
-            <div onClick={() => displaySubMenu("orders")}>
-              <ElementsProfile
-                name="Mes commandes"
-                selected={isOrdersSelected}
-              />
-            </div>
-            <ElementsProfile name="Déconnexion" selected={false} />
           </div>
-          <div className="w-9/12">
-            {subMenu == "informations" && <InfoProfile />}
-            {subMenu == "address" && <Address />}
-            {subMenu == "orders" && <Orders />}
-          </div>
-        </div>
+        )}
       </main>
     </>
   );

@@ -5,12 +5,13 @@ import React, {
   SetStateAction,
   useState,
 } from "react";
+import { User } from "../models/User";
 
 interface UserContextProps {
-  id: string;
-  setId: Dispatch<SetStateAction<string>>;
-  token: string;
-  setToken: Dispatch<SetStateAction<string>>;
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
+  userEdit: User;
+  setUserEdit: Dispatch<SetStateAction<User>>;
 }
 
 interface UserContextProviderProps {
@@ -18,18 +19,18 @@ interface UserContextProviderProps {
 }
 
 const UserContext = createContext<UserContextProps>({
-  id: "",
-  setId: () => {},
-  token: "",
-  setToken: () => {},
+  user: new User(),
+  setUser: () => {},
+  userEdit: new User(),
+  setUserEdit: () => {},
 });
 
 const UserContextProvider = ({ children }: UserContextProviderProps) => {
-  const [id, setId] = useState("");
-  const [token, setToken] = useState("");
+  const [user, setUser] = useState(new User());
+  const [userEdit, setUserEdit] = useState(new User());
 
   return (
-    <UserContext.Provider value={{ id, setId, token, setToken }}>
+    <UserContext.Provider value={{ user, setUser, userEdit, setUserEdit }}>
       {children}
     </UserContext.Provider>
   );

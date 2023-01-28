@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
+import { TypeValue } from "../models/TypeValue";
 
 export default function Input({
   type,
   data,
   setIsValueChanged,
+  setTypeValue,
 }: {
   type: string;
   data: string;
   setIsValueChanged: Dispatch<SetStateAction<boolean>>;
+  setTypeValue: Dispatch<SetStateAction<TypeValue>>;
 }) {
   const [isFirstClick, setIsFirstClick] = useState(true);
   const [value, setValue] = useState("");
@@ -24,6 +27,12 @@ export default function Input({
       setIsValueChanged(false);
     }
     setValue(event.target.value);
+    const newTypeValue: TypeValue = {
+      type: type,
+      value: event.target.value,
+    };
+
+    setTypeValue(newTypeValue);
   };
   const removeValue = (event: any) => {
     if (isFirstClick) {
