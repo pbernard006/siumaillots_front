@@ -16,6 +16,6 @@ export default function InputSearch(){
         }
     }
     return (
-        <input type={"text"} value={value} onClick={removeValue} onChange={editValue} className="w-full px-2 py-2 font-normal text-lg"/>
+        <input type={"text"} value={value} onClick={removeValue} onChange={editValue} className="w-full px-2 py-2 font-normal lg:text-lg"/>
     )
 }

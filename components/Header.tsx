@@ -9,16 +9,31 @@ export default function Header() {
   const [isConnected, setIsConnected] = useState(false);
   const token = Cookies.get("token");
 
+  const clickOnNav = () => {
+    
+  }
+
   return (
     <>
-      <div className="text-xl">
+    <div className="block sm:hidden">
+      <div className="flex items-start text-center py-4">
+        <div className="w-1/12">
+        <i className="fas fa-bars text-lg"></i>
+        </div>
+        <div className="w-10/12">
+            
+        </div>
+        <div className="w-1/12"></div>
+      </div>
+    </div>
+      <div className="hidden sm:block lg:text-xl">
         <div className="container mx-auto flex items-start text-center py-8">
-          <div className="w-1/12">
+          <div className="hidden md:block md:w-1/12">
             <Link href={"/"}>
               <span>logo</span>
             </Link>
           </div>
-          <div className="w-9/12 flex items-start">
+          <div className="w-10/12 md:w-9/12 flex items-start">
             <div className="w-2/12 px-2 py-2">
               <Link href={"/clubs"}>
                 <span className="hover-underline-animation">Club</span>
