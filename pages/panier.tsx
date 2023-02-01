@@ -24,6 +24,12 @@ export default function Panier() {
   const route = useRouter();
   const [failed, setFailed] = useState(true);
 
+  const isLoggedIn = () => {
+    if (!token) {
+      route.push('/connexion');
+    }
+  }
+
   const getStatus = () => {
     const statusCommand = route.query.status;
     console.log(statusCommand);
@@ -75,6 +81,7 @@ export default function Panier() {
   };
 
   useEffect(() => {
+    isLoggedIn();
     getJerseys();
   }, []);
   getStatus();

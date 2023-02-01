@@ -4,7 +4,6 @@ import { Josefin_Sans } from '@next/font/google'
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import { Team } from "../models/Team";
-import Cookies from "js-cookie";
 import { Country } from "../components/Country";
 
 const josefinSans = Josefin_Sans({
@@ -16,7 +15,6 @@ const josefinSans = Josefin_Sans({
 export default function EquipesNationales(){
     const [teamsList,setTeamsList] = useState<Team[]>([]);
     const [isTeamsLoading,setIsTeamsLoading] = useState(true);
-    const token = Cookies.get("token");
 
     const getTeams = async () => {
         const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/nations", {

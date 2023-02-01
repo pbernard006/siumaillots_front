@@ -28,6 +28,12 @@ export default function MyAccount() {
   const { user, setUser, userEdit, setUserEdit } = useContext(UserContext);
   const token = Cookies.get("token");
 
+  const isLoggedIn = () => {
+    if (!token) {
+      Router.push('/connexion');
+    }
+  }
+
   const getUserInformations = async () => {
     const response = await fetch(
       process.env.NEXT_PUBLIC_API_HOST + `/users/current`,
@@ -54,6 +60,7 @@ export default function MyAccount() {
   };
 
   useEffect(() => {
+    isLoggedIn();
     getUserInformations();
   }, [isLoading]);
 

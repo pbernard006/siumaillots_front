@@ -6,7 +6,6 @@ import { Card } from "../components/Card";
 import { useEffect, useState } from "react";
 import { Jersey } from "../models/Jersey";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
 import { Team } from "../models/Team";
 
 const josefinSans = Josefin_Sans({
@@ -21,7 +20,6 @@ export default function Maillots(){
     const [isTeamsLoading,setIsTeamsLoading] = useState(true);
     const [isJerseysLoading,setIsJerseysLoading] = useState(true);
 
-    const token = Cookies.get("token");
     const { asPath } = useRouter();
     let id = asPath.split("id=")[1];
     let isCountry = asPath.split("pays=")[1] ? true : false;
