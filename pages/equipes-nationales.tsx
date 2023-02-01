@@ -19,7 +19,7 @@ const getItems = () =>
 
 export default function EquipesNationales(){
     const [items] = React.useState(getItems);
-    
+
     return (
         <>
         <Head>

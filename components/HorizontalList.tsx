@@ -28,8 +28,9 @@ function HorizontalList({title}: { title: string}) {
             RightArrow={RightArrow}
             onWheel={onWheel}
             >
-            {items.map(({ id }) => (
+            {items.map(({ id }, index) => (
                 <Card
+                  key={index}
                   id={id}
                   title={id}
                   srcImage="/images/maillots/maillot.png"

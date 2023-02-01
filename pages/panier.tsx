@@ -76,23 +76,14 @@ export default function Panier() {
         {!isLoading && (
           <div className="flex justify-center my-20">
             <div className="flex flex-col gap-4 w-5/12  text-center">
-              {jerseys?.map((jersey) => (
+              {jerseys?.map((jersey, index) => (
                 <JerseyBasket
-                  key={jersey.jerseyId}
+                  key={index}
                   id={jersey.jerseyId}
                   size={jersey.size}
                   quantity={jersey.quantity}
                 />
               ))}
-
-              {/* {basket.map((product)) => {
-                            <JerseyBasket
-                                title={id}
-                                itemId={id}
-                                key={id}
-                                />
-                            ))}
-                        }); */}
             </div>
             <div className="ml-40">
               <div className="flex m-5 justify-center m-auto font-bold">
