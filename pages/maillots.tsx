@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Jersey } from "../models/Jersey";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { Team } from "../models/Team";
 
 const josefinSans = Josefin_Sans({
     subsets: ['latin'],
@@ -15,25 +16,20 @@ const josefinSans = Josefin_Sans({
 });
 
 export default function Maillots(){
-
     const [jerseysList,setJerseysList] = useState<Jersey[]>([]);
-    const [teamsList,setTeamsList] = useState<Jersey[]>([]);
+    const [teamsList,setTeamsList] = useState<Team[]>([]);
     const [isTeamsLoading,setIsTeamsLoading] = useState(true);
     const [isJerseysLoading,setIsJerseysLoading] = useState(true);
 
     const token = Cookies.get("token");
     const { asPath } = useRouter();
-    let competitionId = asPath.split("id=")[1];
+    let id = asPath.split("id=")[1];
+    let isCountry = asPath.split("pays=")[1] ? true : false;
     const competition = {
-        competitionId: competitionId
+        competitionId: id
     };
 
     const getJerseysByCompetition = async () => {
-        const league = {
-            competitionId: competitionId
-          };
-        const token = Cookies.get("token");
-
         const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/competition/jersey", {
           method: "POST",
           headers: {
@@ -48,11 +44,11 @@ export default function Maillots(){
 
     const getTeamsByCompetition = async () => {
         const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/competition/team", {
-          method: "POST",
-          headers: {
+        method: "POST",
+        headers: {
             Authorization: `Bearer ${token}`,
         },
-          body: JSON.stringify(competition),
+        body: JSON.stringify(competition),
         });
         const dt = await response.json();
         setTeamsList(dt);  
@@ -80,6 +76,7 @@ export default function Maillots(){
     };
 
     useEffect(() => {
+        getJerseysByTeams(id);
         getJerseysByCompetition();
         getTeamsByCompetition();
     }, []);
@@ -94,7 +91,7 @@ export default function Maillots(){
         </Head>
         <main className={josefinSans.className}>
             <Header/>
-            {!isJerseysLoading && (
+            {!isTeamsLoading && !isCountry && (
                 <div className="ml-2.5 my-5">
                     <select className="border-solid border-2 border-black ml-20 rounded-lg" name="teams" id="teams" onChange={onChange} >
                         <option value="">-- Vous pouvez filtrer par équipe --</option>
