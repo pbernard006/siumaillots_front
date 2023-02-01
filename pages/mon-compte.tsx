@@ -11,6 +11,8 @@ import Address from "../components/Address";
 import Orders from "../components/Orders";
 import { User } from "../models/User";
 import Cookies from "js-cookie";
+import Router from "next/router";
+
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   weight: ["300"],
@@ -80,6 +82,12 @@ export default function MyAccount() {
 
     return undefined;
   }
+
+  function logout() {
+    Cookies.remove('token');
+    Router.push("/connexion");
+  }
+
   return (
     <>
       <Head>
@@ -112,7 +120,9 @@ export default function MyAccount() {
                   selected={isOrdersSelected}
                 />
               </div>
-              <ElementsProfile name="Déconnexion" selected={false} />
+              <div onClick={logout}>
+                <ElementsProfile name="Déconnexion" selected={false} />
+              </div>
             </div>
             <div className="w-9/12">
               {subMenu == "informations" && (
