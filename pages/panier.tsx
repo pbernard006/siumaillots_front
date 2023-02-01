@@ -17,6 +17,7 @@ const josefinSans = Josefin_Sans({
 export default function Panier() {
   const [jerseys, setJerseys] = useState<JerseyFromBasket[]>([]);
   const [basketId, setBasketId] = useState("");
+  const [total, setTotal] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("token");
 
@@ -31,7 +32,9 @@ export default function Panier() {
       }
     );
     const dt = await response.json();
+    console.log(dt);
     setBasketId(dt.basketId);
+    setTotal(dt.totalPrice);
     setJerseys(dt.jerseys);
     setIsLoading(false);
   };
@@ -73,7 +76,13 @@ export default function Panier() {
       </Head>
       <main className={josefinSans.className}>
         <Header />
-        {!isLoading && (
+        {!jerseys && (
+          <div className="text-xl flex justify-center font-bold text-center my-20">
+            <h1>Votre panier est vide ...<br/>
+            N'hésites pas à ajouter un SIUUUU maillot !</h1>
+          </div>
+        )}
+        {!isLoading && jerseys && (
           <div className="flex justify-center my-20">
             <div className="flex flex-col gap-4 w-5/12  text-center">
               {jerseys?.map((jersey, index) => (
@@ -88,7 +97,7 @@ export default function Panier() {
             <div className="ml-40">
               <div className="flex m-5 justify-center m-auto font-bold">
                 <h4 className="uppercase ">Total : </h4>
-                <h4 className="ml-3"> TODO :CALCULER LE PRIX TOTAL</h4>
+                <h4 className="ml-3">{total} €</h4>
               </div>
               <div className="mt-5">
                 <button
