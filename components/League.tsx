@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from "next/link";
 
-export function League({src, link, league}: { src: string; link: string; league: string}) {
+export function LeagueCard({src, link}: { src: string; link: string}) {
   return (
     <Link href={link} className="flex items-center justify-center">
-      <Image
+      <img
           alt="Ligue 1"
           src={src}
           width={300}

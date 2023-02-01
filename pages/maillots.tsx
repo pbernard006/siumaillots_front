@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import { Card } from "../components/Card";
 import { useEffect, useState } from "react";
 import { Jersey } from "../models/Jersey";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const josefinSans = Josefin_Sans({
     subsets: ['latin'],
@@ -12,47 +14,75 @@ const josefinSans = Josefin_Sans({
     display: 'swap'
 });
 
-const elemPrefix = "Maillot";
-const getId = (index: number) => `${elemPrefix}${index}`;
-const getItems = () =>
-  Array(20)
-    .fill(0)
-    .map((_, ind) => ({ id: getId(ind) }));
-
 export default function Maillots(){
 
     const [jerseysList,setJerseysList] = useState<Jersey[]>([]);
-    const [isLoading,setIsLoading] = useState(true);
+    const [teamsList,setTeamsList] = useState<Jersey[]>([]);
+    const [isTeamsLoading,setIsTeamsLoading] = useState(true);
+    const [isJerseysLoading,setIsJerseysLoading] = useState(true);
 
+    const token = Cookies.get("token");
+    const { asPath } = useRouter();
+    let competitionId = asPath.split("id=")[1];
+    const competition = {
+        competitionId: competitionId
+    };
 
-    const getAllJerseys = async () => {
-        const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/jerseys", {
-          method: "GET",
+    const getJerseysByCompetition = async () => {
+        const league = {
+            competitionId: competitionId
+          };
+        const token = Cookies.get("token");
+
+        const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/competition/jersey", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+        },
+          body: JSON.stringify(competition),
         });
         const dt = await response.json();
-
-        let jerseys = [];
-        for(let i=0; i<dt["hydra:member"].length; i++){
-            let jersey = {
-                id: dt["hydra:member"][i].id,
-                team_id: dt["hydra:member"][i].team_id,
-                year: dt["hydra:member"][i].year,
-                model: dt["hydra:member"][i].model,
-                name: dt["hydra:member"][i].name,
-                price: dt["hydra:member"][i].price,
-                filePath: dt["hydra:member"][i].filePath
-            }
-            jerseys.push(jersey);      
-        }
-
-        setJerseysList(jerseys);  
-        setIsLoading(false);
+        setJerseysList(dt);  
+        setIsJerseysLoading(false);
     };
-    
-    useEffect(() => {
-    getAllJerseys();
-    }, []);
 
+    const getTeamsByCompetition = async () => {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/competition/team", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+        },
+          body: JSON.stringify(competition),
+        });
+        const dt = await response.json();
+        setTeamsList(dt);  
+        setIsTeamsLoading(false);
+    };
+
+    const onChange = (event:any) => {
+        const teamId = event.target.value;
+        teamId ? getJerseysByTeams(teamId) : getJerseysByCompetition();
+    };
+
+    const getJerseysByTeams = async (teamId:string) => {
+        const team = {
+            teamId: teamId
+        }
+        const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/team/jersey", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(team),
+        });
+        const dt = await response.json();
+        setJerseysList(dt);
+    };
+
+    useEffect(() => {
+        getJerseysByCompetition();
+        getTeamsByCompetition();
+    }, []);
 
     return (
         <>
@@ -64,19 +94,22 @@ export default function Maillots(){
         </Head>
         <main className={josefinSans.className}>
             <Header/>
-            <div className="ml-2.5 my-5">
-                <select className="border-solid border-2 border-black ml-20 rounded-lg" name="teams" id="teams">
-                    <option value="">-- Vous pouvez filtrer par équipe --</option>
-                    <option value="om">OM</option>
-                    <option value="psg">PSG</option>
-                    <option value="ol">OL</option>
-                </select>
-            </div>
+            {!isJerseysLoading && (
+                <div className="ml-2.5 my-5">
+                    <select className="border-solid border-2 border-black ml-20 rounded-lg" name="teams" id="teams" onChange={onChange} >
+                        <option value="">-- Vous pouvez filtrer par équipe --</option>
+                        {teamsList.map((team, index) => (
+                            <option key={index} value={team.id}>{team.name}</option>
+                        ))}
+                    </select>
+                </div>
+            )}
 
-            {!isLoading && (
+            {!isJerseysLoading && (
                 <div className="grid grid-cols-5 gap-y-5 ml-20 justify-around text-center">
-                    {jerseysList.map((jersey) => (
+                    {jerseysList.map((jersey, index) => (
                         <Card
+                        key={index}
                         id={jersey.id}
                         title={jersey.name}
                         srcImage={process.env.NEXT_PUBLIC_API_HOST + jersey.filePath}

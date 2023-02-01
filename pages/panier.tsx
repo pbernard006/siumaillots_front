@@ -14,16 +14,7 @@ const josefinSans = Josefin_Sans({
   display: "swap",
 });
 
-// const elemPrefix = "Maillot";
-// const getId = (index: number) => `${elemPrefix}${index}`;
-// const getItems = () =>
-//   Array(3)
-//     .fill(0)
-//     .map((_, ind) => ({ id: getId(ind) }));
-
 export default function Panier() {
-  // const [items] = React.useState(getItems);
-  // const [jerseysList,setJerseysList] = useState<Jersey[]>([]);
   const [jerseys, setJerseys] = useState<JerseyFromBasket[]>([]);
   const [basketId, setBasketId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -85,7 +76,7 @@ export default function Panier() {
         {!isLoading && (
           <div className="flex justify-center my-20">
             <div className="flex flex-col gap-4 w-5/12  text-center">
-              {jerseys.map((jersey) => (
+              {jerseys?.map((jersey) => (
                 <JerseyBasket
                   key={jersey.jerseyId}
                   id={jersey.jerseyId}
