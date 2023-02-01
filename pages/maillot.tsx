@@ -86,7 +86,7 @@ export default function Maillot() {
             </div>
             <div className="flex flex-col justify-around">
               <div className="font-bold">{jersey?.name}</div>
-              <div>{jersey?.price}</div>
+              <div>{jersey?.price} €</div>
               <select
                 onChange={(e) => setSize(e.target.value)}
                 className="border-solid border-2 border-black rounded-lg"
