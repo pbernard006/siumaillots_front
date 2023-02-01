@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { JerseyFromBasket } from "../models/JerseyFromBasket";
 import Router from "next/router";
+import { useRouter } from "next/router";
 
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
@@ -17,9 +18,20 @@ const josefinSans = Josefin_Sans({
 export default function Panier() {
   const [jerseys, setJerseys] = useState<JerseyFromBasket[]>([]);
   const [basketId, setBasketId] = useState("");
-  const [total, setTotal] = useState('');
+  const [total, setTotal] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("token");
+  const route = useRouter();
+  const [failed, setFailed] = useState(true);
+
+  const getStatus = () => {
+    const statusCommand = route.query.status;
+    console.log(statusCommand);
+    if(statusCommand == 'fail' && failed) {
+      alert("Votre commande a échoué, veuillez essayer plus tard...")
+      setFailed(false);
+    }
+  }
 
   const getJerseys = async () => {
     const response = await fetch(
@@ -32,7 +44,6 @@ export default function Panier() {
       }
     );
     const dt = await response.json();
-    console.log(dt);
     setBasketId(dt.basketId);
     setTotal(dt.totalPrice);
     setJerseys(dt.jerseys);
@@ -66,6 +77,8 @@ export default function Panier() {
   useEffect(() => {
     getJerseys();
   }, []);
+  getStatus();
+
   return (
     <>
       <Head>
