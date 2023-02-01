@@ -23,8 +23,13 @@ export default function InfoProfile({
   const [isValueChanged, setIsValueChanged] = useState(false);
   const [value, setValue] = useState(new TypeValue());
   const { user, setUser, userEdit, setUserEdit } = useContext(UserContext);
+  const [isFirstEdit, setIsFirstEdit] = useState(true);
 
   useEffect(() => {
+    if (isFirstEdit) {
+      setUserEdit(user);
+      setIsFirstEdit(false);
+    }
     updateUser(value);
   }, [value]);
   const updateUser = (typeValue: TypeValue) => {
@@ -34,12 +39,12 @@ export default function InfoProfile({
       case "firstName": {
         const newUser: User = {
           firstName: typeValue.value,
-          id: user.id,
-          email: user.email,
-          lastName: user.lastName,
-          roles: user.roles,
-          addresses: user.addresses,
-          orders: user.orders,
+          id: userEdit.id,
+          email: userEdit.email,
+          lastName: userEdit.lastName,
+          roles: userEdit.roles,
+          addresses: userEdit.addresses,
+          orders: userEdit.orders,
         };
 
         setUserEdit(newUser);
@@ -49,12 +54,12 @@ export default function InfoProfile({
       case "lastName": {
         const newUser: User = {
           lastName: typeValue.value,
-          firstName: user.firstName,
-          id: user.id,
-          email: user.email,
-          roles: user.roles,
-          addresses: user.addresses,
-          orders: user.orders,
+          firstName: userEdit.firstName,
+          id: userEdit.id,
+          email: userEdit.email,
+          roles: userEdit.roles,
+          addresses: userEdit.addresses,
+          orders: userEdit.orders,
         };
         setUserEdit(newUser);
 
@@ -64,11 +69,11 @@ export default function InfoProfile({
         const newUser: User = {
           email: typeValue.value,
           firstName: typeValue.value,
-          id: user.id,
-          lastName: user.lastName,
-          roles: user.roles,
-          addresses: user.addresses,
-          orders: user.orders,
+          id: userEdit.id,
+          lastName: userEdit.lastName,
+          roles: userEdit.roles,
+          addresses: userEdit.addresses,
+          orders: userEdit.orders,
         };
         setUserEdit(newUser);
 
@@ -108,7 +113,11 @@ export default function InfoProfile({
               setIsValueChanged={setIsValueChanged}
             />
           </div>
-          <Button valueChanged={isValueChanged} setIsLoading={setIsLoading} />
+          <Button
+            valueChanged={isValueChanged}
+            setIsLoading={setIsLoading}
+            addressChanged={false}
+          />
         </div>
       </div>
     </div>

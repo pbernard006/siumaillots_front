@@ -23,8 +23,18 @@ export default function MyAccount() {
   const [isInformationsSelected, setIsInformationsSelected] = useState(true);
   const [isAddressSelected, setIsAddressSelected] = useState(false);
   const [isOrdersSelected, setIsOrdersSelected] = useState(false);
-  const { user, setUser, userEdit, setUserEdit } = useContext(UserContext);
+  const {
+    user,
+    setUser,
+    userEdit,
+    setUserEdit,
+    address,
+    setAddress,
+    addressEdit,
+    setAddressEdit,
+  } = useContext(UserContext);
   const token = Cookies.get("token");
+  console.log(token);
 
   const getUserInformations = async () => {
     const response = await fetch(
@@ -40,14 +50,19 @@ export default function MyAccount() {
     const dt = await response.json();
 
     let newUser: User = new User();
-    user.addresses = [];
-    user.email = dt.email;
-    user.firstName = dt.firstName;
-    user.lastName = dt.lastName;
-    user.orders = [];
-    user.roles = [];
-    user.id = dt.id;
+    newUser.addresses = dt.addresses;
+    newUser.email = dt.email;
+    newUser.firstName = dt.firstName;
+    newUser.lastName = dt.lastName;
+    newUser.orders = [];
+    newUser.roles = [];
+    newUser.id = dt.id;
 
+    if (newUser.addresses) {
+      setAddressEdit(newUser.addresses[0]);
+      setAddress(newUser.addresses[0]);
+    }
+    setUser(newUser);
     setIsLoading(false);
   };
 
@@ -121,7 +136,9 @@ export default function MyAccount() {
                   setIsLoading={setIsLoading}
                 />
               )}
-              {subMenu == "address" && <Address />}
+              {subMenu == "address" && (
+                <Address isLoading={isLoading} setIsLoading={setIsLoading} />
+              )}
               {subMenu == "orders" && <Orders />}
             </div>
           </div>

@@ -17,6 +17,8 @@ export default function Input({
   const [value, setValue] = useState("");
 
   useEffect(() => {
+    console.log(data);
+
     setValue(data);
   }, []);
 
