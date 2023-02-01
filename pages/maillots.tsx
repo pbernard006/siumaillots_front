@@ -32,9 +32,6 @@ export default function Maillots(){
     const getJerseysByCompetition = async () => {
         const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/competition/jersey", {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-        },
           body: JSON.stringify(competition),
         });
         const dt = await response.json();
@@ -45,9 +42,6 @@ export default function Maillots(){
     const getTeamsByCompetition = async () => {
         const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/competition/team", {
         method: "POST",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(competition),
         });
         const dt = await response.json();
@@ -66,9 +60,6 @@ export default function Maillots(){
         }
         const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/team/jersey", {
             method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
             body: JSON.stringify(team),
         });
         const dt = await response.json();

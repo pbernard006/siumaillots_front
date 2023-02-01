@@ -21,9 +21,6 @@ export default function EquipesNationales(){
     const getTeams = async () => {
         const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/nations", {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-        },
         });
         const dt = await response.json();
         setTeamsList(dt);  
