@@ -8,6 +8,7 @@ import { Jersey } from "../models/Jersey";
 import { useRouter } from "next/router";
 import { UserContext } from "../contexts/UserContext";
 import Cookies from "js-cookie";
+import Popup from 'reactjs-popup';
 
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
@@ -42,26 +43,31 @@ export default function Maillot() {
   }, []);
 
   const addToBasket = async () => {
-    const product = {
-      jerseyId: jerseyId,
-      size: size,
-      quantity: quantity,
-    };
+    if (!size || !quantity) {
+      alert('Veuillez saisir une taille une quantité');
+    } else {
+      const product = {
+        jerseyId: jerseyId,
+        size: size,
+        quantity: quantity,
+      };
+      console.log(product);
 
-    const token = Cookies.get("token");
+      const token = Cookies.get("token");
 
-    const response = await fetch(
-      process.env.NEXT_PUBLIC_API_HOST + "/basket/add/jersey",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(product),
-      }
-    );
-    const result = await response.json();
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_HOST + "/basket/add/jersey",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(product),
+        }
+      );
+      const result = await response.json();
+    }
   };
 
   return (
