@@ -1,6 +1,34 @@
-import { League } from "./League"
+import { LeagueCard } from "./League"
+import { League } from "../models/League";
+import { useEffect, useState } from "react";
 
 export default function LeaguesList() {
+    const [leaguesList,setLeaguesList] = useState<League[]>([]);
+    const [isLoading,setIsLoading] = useState(true);
+
+    const getAllLeagues = async () => {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/competitions", {
+          method: "GET",
+        });
+        const dt = await response.json();
+
+        let leagues = [];
+        for(let i=0; i<dt["hydra:member"].length; i++){
+            let league = {
+                id: dt["hydra:member"][i].id,
+                name: dt["hydra:member"][i].name,
+                logo: dt["hydra:member"][i].logo
+            }
+            leagues.push(league);      
+        }
+        setLeaguesList(leagues);  
+        setIsLoading(false);
+    };
+    
+    useEffect(() => {
+        getAllLeagues();
+    }, []);
+
   return (
     <>
         <div className="vertical-center bg-stadium h-screen">
@@ -9,33 +37,17 @@ export default function LeaguesList() {
                     <div className="text-white text-3xl font-bold text-center">
                         <h1>Dans quel championnat joue ton équipe ?</h1>
                     </div>
-                    <div className="grid grid-cols-5 gap-4 mt-20">
-                        <League
-                            src="/images/logos/premierleague.png"
-                            link="/maillots?championnat=premierLeague"
-                            league ="premierLeague"
-                        />
-                        <League
-                            src="/images/logos/ligue1.png"
-                            link="/maillots?championnat=ligue1"
-                            league ="ligue1"
-                        />
-                        <League
-                            src="/images/logos/liga.png"
-                            link="/maillots?championnat=ligaSantander"
-                            league ="ligaSantander"
-                        />
-                        <League
-                            src="/images/logos/seriea.png"
-                            link="/maillots?championnat=serieA"
-                            league ="serieA"
-                        />
-                        <League
-                            src="/images/logos/bundesliga.png"
-                            link="/maillots?championnat=bundesliga"
-                            league ="bundesliga"
-                        />
-                    </div>
+                    {!isLoading && (
+                        <div className="grid grid-cols-5 gap-4 mt-20">
+                            {leaguesList.map((league, index) => (
+                                <LeagueCard
+                                key={index}
+                                src={process.env.NEXT_PUBLIC_API_HOST + league.logo}
+                                link={"/maillots?id=" + league.id + "&championnat=" + (league.name).replace(' ','-')}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
