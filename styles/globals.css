@@ -41,11 +41,37 @@ textarea:focus, input:focus{
 
 .vertical-center{
   display: flex;
-align-items: center;
-justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .bg-stadium{
   background-image: url("/images/background/stadium.jpg");
   background-position: center;
+}
+
+.container-siuuu {
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-siuuu img {
+  border-radius: 20px;
+}
+
+.container-siuuu button {
+  margin-bottom: 30px;
+  background-color: #C10000;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  transition: all .3s;
+}
+
+.container-siuuu button:hover {
+  opacity: .8;
 }
