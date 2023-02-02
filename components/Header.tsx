@@ -3,19 +3,10 @@ import { useState, useContext } from "react";
 import InputSearch from "./InputSearch";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Cookies from "js-cookie";
-import Router from "next/router";
 
 export default function Header() {
   const [isConnected, setIsConnected] = useState(false);
   const token = Cookies.get("token");
-
-  const search = () => {
-    const search = document.getElementById('jerseySearch') as HTMLInputElement | null;
-    if (search != null) {
-      const valueSearched = search.value;
-      Router.push('/maillots?search='+valueSearched)
-    }
-  }
 
   return (
     <>
@@ -39,9 +30,8 @@ export default function Header() {
                 </span>
               </Link>
             </div>
-            <div className="w-7/12 text-start border-input flex items-center">
+            <div className="w-7/12 text-start border-input">
               <InputSearch />
-              <i className="fas fa-search mr-2" onClick={search}></i>
             </div>
           </div>
           <div className="w-2/12 flex justify-center">
