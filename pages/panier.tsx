@@ -1,20 +1,20 @@
-import Head from "next/head";
-import React from "react";
-import { Josefin_Sans } from "@next/font/google";
-import Header from "../components/Header";
-import { JerseyBasket } from "../components/JerseyBasket";
-import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import { JerseyFromBasket } from "../models/JerseyFromBasket";
-import Router from "next/router";
-import { useRouter } from "next/router";
-import { Address } from "../models/Address";
-import Link from "next/link";
+import Head from 'next/head'
+import React from 'react'
+import { Josefin_Sans } from '@next/font/google'
+import Header from '../components/Header'
+import { JerseyBasket } from '../components/JerseyBasket'
+import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
+import { JerseyFromBasket } from '../models/JerseyFromBasket'
+import Router from 'next/router'
+import { useRouter } from 'next/router'
+import { Address } from '../models/Address'
+import Link from 'next/link'
 const josefinSans = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["300"],
-  display: "swap",
-});
+  subsets: ['latin'],
+  weight: ['300'],
+  display: 'swap',
+})
 
 export default function Panier() {
   const [jerseys, setJerseys] = useState<JerseyFromBasket[]>([]);
@@ -45,49 +45,49 @@ export default function Panier() {
 
   const getJerseys = async () => {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_HOST + "/current-basket",
+      process.env.NEXT_PUBLIC_API_HOST + '/current-basket',
       {
-        method: "GET",
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
-    );
-    const dt = await response.json();
-    setBasketId(dt.basketId);
-    setTotal(dt.totalPrice);
-    setJerseys(dt.jerseys);
+      },
+    )
+    const dt = await response.json()
+    setBasketId(dt.basketId)
+    setTotal(dt.totalPrice)
+    setJerseys(dt.jerseys)
     if (dt?.addresses?.length > 0) {
-      setAdresses(dt.addresses);
-      setIsAddressesLoading(false);
+      setAdresses(dt.addresses)
+      setIsAddressesLoading(false)
     }
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   const payBasket = async () => {
     const order = {
       orderId: basketId,
       addressId: address,
-    };
+    }
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_HOST + "/create-checkout-session",
+      process.env.NEXT_PUBLIC_API_HOST + '/create-checkout-session',
       {
-        method: "POST",
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(order),
-      }
-    );
+      },
+    )
 
-    const result = await response.json();
+    const result = await response.json()
     if (response.status == 200) {
-      const url = result.url;
-      Router.push(url);
+      const url = result.url
+      Router.push(url)
     } else {
       alert("Une erreur s&apos;est produite, veuillez essayer plus tard...");
     }
-  };
+  }
 
   const onChange = (event: any) => {
     const btnPayBasket = document.getElementById(
@@ -98,16 +98,16 @@ export default function Panier() {
         setActive(true);
         setAdress(event.target.value);
       } else {
-        setActive(false);
+        setActive(false)
       }
     }
-  };
+  }
 
   useEffect(() => {
-    isLoggedIn();
-    getJerseys();
-  }, []);
-  getStatus();
+    isLoggedIn()
+    getJerseys()
+  }, [])
+  getStatus()
 
   return (
     <>
@@ -190,5 +190,5 @@ export default function Panier() {
         )}
       </main>
     </>
-  );
+  )
 }

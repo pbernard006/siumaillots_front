@@ -1,5 +1,5 @@
-import HeaderProfile from "./HeaderProfile";
-import ElementsProfile from "./ElementsProfile";
+import HeaderProfile from './HeaderProfile'
+import ElementsProfile from './ElementsProfile'
 
 export default function Profile() {
   return (
@@ -10,5 +10,5 @@ export default function Profile() {
       <ElementsProfile name="Mes commandes" selected={false} />
       <ElementsProfile name="Déconnexion" selected={false} />
     </div>
-  );
+  )
 }

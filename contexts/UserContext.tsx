@@ -4,23 +4,23 @@ import React, {
   ReactNode,
   SetStateAction,
   useState,
-} from "react";
-import { AddressModel } from "../models/AddressModel";
-import { User } from "../models/User";
+} from 'react'
+import { AddressModel } from '../models/AddressModel'
+import { User } from '../models/User'
 
 interface UserContextProps {
-  user: User;
-  setUser: Dispatch<SetStateAction<User>>;
-  userEdit: User;
-  setUserEdit: Dispatch<SetStateAction<User>>;
-  address: AddressModel;
-  setAddress: Dispatch<SetStateAction<AddressModel>>;
-  addressEdit: AddressModel;
-  setAddressEdit: Dispatch<SetStateAction<AddressModel>>;
+  user: User
+  setUser: Dispatch<SetStateAction<User>>
+  userEdit: User
+  setUserEdit: Dispatch<SetStateAction<User>>
+  address: AddressModel
+  setAddress: Dispatch<SetStateAction<AddressModel>>
+  addressEdit: AddressModel
+  setAddressEdit: Dispatch<SetStateAction<AddressModel>>
 }
 
 interface UserContextProviderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const UserContext = createContext<UserContextProps>({
@@ -33,13 +33,13 @@ const UserContext = createContext<UserContextProps>({
   setAddress: () => {},
   addressEdit: new AddressModel(),
   setAddressEdit: () => {},
-});
+})
 
 const UserContextProvider = ({ children }: UserContextProviderProps) => {
-  const [user, setUser] = useState(new User());
-  const [userEdit, setUserEdit] = useState(new User());
-  const [address, setAddress] = useState(new AddressModel());
-  const [addressEdit, setAddressEdit] = useState(new AddressModel());
+  const [user, setUser] = useState(new User())
+  const [userEdit, setUserEdit] = useState(new User())
+  const [address, setAddress] = useState(new AddressModel())
+  const [addressEdit, setAddressEdit] = useState(new AddressModel())
 
   return (
     <UserContext.Provider
@@ -56,7 +56,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
     >
       {children}
     </UserContext.Provider>
-  );
-};
+  )
+}
 
-export { UserContext, UserContextProvider };
+export { UserContext, UserContextProvider }

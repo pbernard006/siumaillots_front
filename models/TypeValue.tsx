@@ -1,6 +1,6 @@
 export class TypeValue {
-  type?: string = "";
-  value?: string = "";
+  type?: string = ''
+  value?: string = ''
 
   constructor() {}
 }

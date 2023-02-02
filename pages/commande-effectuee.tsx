@@ -1,35 +1,36 @@
-import Head from "next/head";
-import React from "react";
-import { Josefin_Sans } from "@next/font/google";
-import Header from "../components/Header";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie";
-import { useEffect } from "react";
-import Image from "next/image";
+import Head from 'next/head'
+import React from 'react'
+import { Josefin_Sans } from '@next/font/google'
+import Header from '../components/Header'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
+import { useEffect } from 'react'
+import Image from 'next/image'
 
 const josefinSans = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["300"],
-  display: "swap",
-});
+  subsets: ['latin'],
+  weight: ['300'],
+  display: 'swap',
+})
 
 export default function CommandeEffectuee() {
-  const router = useRouter();
-  const { asPath } = useRouter();
-  let sessionId = asPath.split("session_id=")[1];
+  const router = useRouter()
+  const { asPath } = useRouter()
+  let sessionId = asPath.split('session_id=')[1]
   const validationCommand = async () => {
     const session = {
       stripeCheckout: sessionId,
     };
+
     if (sessionId) {
-      const token = Cookies.get("token");
+      const token = Cookies.get('token')
       const response = await fetch(
-        process.env.NEXT_PUBLIC_API_HOST + "/validation-command",
+        process.env.NEXT_PUBLIC_API_HOST + '/validation-command',
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(session),
@@ -85,5 +86,5 @@ export default function CommandeEffectuee() {
         </Link>
       </main>
     </>
-  );
+  )
 }
