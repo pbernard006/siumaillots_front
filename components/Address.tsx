@@ -118,8 +118,8 @@ export default function Address({
                 l&apos;ajouter !
               </span>
             </div>
-            <div className="bg-black text-center text-white py-2 text-xl mt-8">
-              <button onClick={displayAddressForm}>Ajouter mon adresse</button>
+            <div onClick={displayAddressForm} className="bg-black text-center cursor-pointer text-white py-2 text-xl mt-8">
+              <span>Ajouter mon adresse</span>
             </div>
           </div>
         </div>

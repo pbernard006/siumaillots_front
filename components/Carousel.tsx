@@ -46,7 +46,7 @@ export default function Carousel(){
         className="block w-full"
       />
       <div className="carousel-caption hidden md:block absolute text-center">
-        <h5 className="text-xl">Retrouvez les maillots des bleus ...</h5>
+        <h5 className="text-xl">Retrouvez les maillots des bleus...</h5>
       </div>
     </div>
     <div className="carousel-item relative float-left w-full">
@@ -56,7 +56,7 @@ export default function Carousel(){
         className="block w-full"
       />
       <div className="carousel-caption hidden md:block absolute text-center">
-        <h5 className="text-xl">de votre joueur favori ...</h5>
+        <h5 className="text-xl">de votre joueur favori...</h5>
       </div>
     </div>
     <div className="carousel-item relative float-left w-full">
