@@ -82,7 +82,7 @@ export default function Maillot() {
       </Head>
       <main className={josefinSans.className}>
         <Header />
-        {!isLoading && (
+        {!isLoading && jersey && (
           <div className="flex justify-center mt-20">
             <div className="mr-20">
               <img

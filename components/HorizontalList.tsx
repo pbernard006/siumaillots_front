@@ -9,7 +9,6 @@ type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
 
 function HorizontalList({title, jerseys}: { title: string; jerseys: Jersey[]}) {
   const { disableScroll, enableScroll } = usePreventBodyScroll();
-console.log(jerseys);
   return (
     <div className="my-20 mx-20 text-center">
         <h2 className="font-bold mb-3">{title}</h2>

@@ -32,7 +32,6 @@ export default function Panier() {
 
   const getStatus = () => {
     const statusCommand = route.query.status;
-    console.log(statusCommand);
     if(statusCommand == 'fail' && failed) {
       alert("Votre commande a échoué, veuillez essayer plus tard...")
       setFailed(false);
@@ -99,7 +98,7 @@ export default function Panier() {
         {!jerseys && (
           <div className="text-xl flex justify-center font-bold text-center my-20">
             <h1>Votre panier est vide ...<br/>
-            N'hésites pas à ajouter un SIUUUU maillot !</h1>
+            N'hésite pas à ajouter un SIUUUU maillot !</h1>
           </div>
         )}
         {!isLoading && jerseys && (

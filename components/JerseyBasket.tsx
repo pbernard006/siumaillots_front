@@ -25,7 +25,7 @@ export function JerseyBasket({ id, size, quantity }: { id: string; size: string,
 
   return (
     <>
-      {!isLoading &&  (
+      {!isLoading && jersey && (
         <div
           role="button"
           tabIndex={0}
