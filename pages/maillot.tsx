@@ -2,12 +2,11 @@ import Head from "next/head";
 import React from "react";
 import { Josefin_Sans } from "@next/font/google";
 import Header from "../components/Header";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Jersey } from "../models/Jersey";
 import { useRouter } from "next/router";
-import { UserContext } from "../contexts/UserContext";
 import Cookies from "js-cookie";
+import Router from "next/router";
 
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
@@ -69,6 +68,7 @@ export default function Maillot() {
         }
       );
       const result = await response.json();
+      Router.push('/panier');
     }
   };
 
@@ -130,7 +130,7 @@ export default function Maillot() {
               <div className="flex justify-between">
                 <button
                   onClick={addToBasket}
-                  className="bg-black text-white rounded-lg w-4/5"
+                  className="bg-black text-white font-bold rounded-lg w-4/5"
                 >
                   Ajouter au panier
                 </button>
