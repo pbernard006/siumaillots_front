@@ -8,14 +8,17 @@ export default function InputSearch(){
         setValue(event.target.value);
     }
     const removeValue = (event: any) => {
-        if(isFirstClick){
+        if(isFirstClick) {
             setIsFirstClick(false);
             setValue("");
-        }else{
+        } else{
             event.target.select();
         }
     }
     return (
-        <input type={"text"} id="jerseySearch" name="jerseySearch" value={value} onClick={removeValue} onChange={editValue} className="w-full px-2 py-2 font-normal text-lg"/>
+        <form action="maillots" autoComplete="off" className="flex">
+            <input type={"text"} id="jerseySearch" name="search" value={value} onClick={removeValue} onChange={editValue} className="w-full px-2 py-2 font-normal text-lg"/>
+            <button type="submit" className="mr-3"><i className="fas fa-search" ></i></button>
+        </form>
     )
 }
