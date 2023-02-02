@@ -114,6 +114,7 @@ export default function InfoProfile({
             />
           </div>
           <Button
+            isNewAddress={true}
             valueChanged={isValueChanged}
             setIsLoading={setIsLoading}
             addressChanged={false}

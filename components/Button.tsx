@@ -81,6 +81,14 @@ export default function Button({
         }
       }
     } else {
+      const newUser: User = {
+        email: userEdit.email,
+        firstName: userEdit.firstName,
+        lastName: userEdit.lastName,
+        roles: userEdit.roles,
+        orders: userEdit.orders,
+      };
+
       const response = await fetch(
         process.env.NEXT_PUBLIC_API_HOST + `/users/${id}`,
         {
@@ -89,7 +97,7 @@ export default function Button({
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(userEdit),
+          body: JSON.stringify(newUser),
         }
       );
       const result = await response.json();
@@ -108,9 +116,7 @@ export default function Button({
           valueChanged ? "bg-black" : "bg-slate-300"
         }  text-center text-white py-2 text-xl mt-8 cursor-pointer`}
       >
-        <span className="rounded-none" >
-          Enregistrer
-        </span>
+        <span className="rounded-none">Enregistrer</span>
       </div>
     </>
   );
