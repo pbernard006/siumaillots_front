@@ -101,3 +101,7 @@ button:disabled:hover {
 .bg-red {
   background: #c10000;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}

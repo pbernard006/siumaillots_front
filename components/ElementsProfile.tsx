@@ -9,9 +9,9 @@ export default function ElementsProfile({
     <div
       className={`${
         selected ? "bg-slate-300" : "bg-black"
-      } my-10 mx-auto font-bold rounded-3xl text-white w-full h-9 flex items-center justify-center py-5`}
+      } my-10 mx-auto font-bold rounded-3xl text-white w-full h-9 flex items-center justify-center py-5 cursor-pointer`}
     >
-      <label>{name}</label>
+      <label className="cursor-pointer">{name}</label>
     </div>
   );
 }
