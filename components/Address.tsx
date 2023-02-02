@@ -48,8 +48,6 @@ export default function Address({
     }
     updateUser(typeValue);
 
-    console.log(userEdit, user);
-
     if (user.addresses && user.addresses.length > 0) {
       setIsDisplayAddressForm(true);
     }
@@ -108,8 +106,6 @@ export default function Address({
       }
     }
   };
-
-  console.log(isDisplayAddressForm);
 
   if (!isDisplayAddressForm) {
     return (
