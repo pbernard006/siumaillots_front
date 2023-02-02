@@ -130,7 +130,7 @@ export default function Maillot() {
               <div className="flex justify-between">
                 <button
                   onClick={addToBasket}
-                  className="bg-black text-white font-bold rounded-lg w-4/5"
+                  className="bg-red text-white font-bold rounded-lg w-4/5"
                 >
                   Ajouter au panier
                 </button>
