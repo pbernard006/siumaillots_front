@@ -27,21 +27,21 @@ export default function Panier() {
   const token = Cookies.get("token");
   const route = useRouter();
   const [failed, setFailed] = useState(true);
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(false);
 
   const isLoggedIn = () => {
     if (!token) {
-      route.push('/connexion');
+      route.push("/connexion");
     }
-  }
+  };
 
   const getStatus = () => {
     const statusCommand = route.query.status;
-    if(statusCommand == 'fail' && failed) {
-      alert("Votre commande a échoué, veuillez essayer plus tard...")
+    if (statusCommand == "fail" && failed) {
+      alert("Votre commande a échoué, veuillez essayer plus tard...");
       setFailed(false);
     }
-  }
+  };
 
   const getJerseys = async () => {
     const response = await fetch(
@@ -85,14 +85,16 @@ export default function Panier() {
       const url = result.url;
       Router.push(url);
     } else {
-      alert("Une erreur s'est produite, veuillez essayer plus tard...")
+      alert("Une erreur s&apos;est produite, veuillez essayer plus tard...");
     }
   };
 
-  const onChange = (event:any) => {
-    const btnPayBasket = document.getElementById('btnPayBasket') as HTMLInputElement | null;
+  const onChange = (event: any) => {
+    const btnPayBasket = document.getElementById(
+      "btnPayBasket"
+    ) as HTMLInputElement | null;
     if (btnPayBasket) {
-      if (event.target.value !='') {
+      if (event.target.value != "") {
         setActive(true);
         setAdress(event.target.value);
       } else {
@@ -119,8 +121,11 @@ export default function Panier() {
         <Header />
         {!jerseys && (
           <div className="text-xl flex justify-center font-bold text-center my-20">
-            <h1>Votre panier est vide...<br/>
-            N'hésitez pas à ajouter un SIUUUU maillot !</h1>
+            <h1>
+              Votre panier est vide...
+              <br />
+              N&apos;hésitez pas à ajouter un SIUUUU maillot !
+            </h1>
           </div>
         )}
         {!isLoading && jerseys && (
@@ -142,26 +147,41 @@ export default function Panier() {
               </div>
               <div className="mt-5 flex flex-col items-center">
                 {!isAddressesLoading && (
-                  <select className="border-solid border-2 border-black rounded-lg" name="addressSelect" id="addressSelect" onChange={onChange} >
+                  <select
+                    className="border-solid border-2 border-black rounded-lg"
+                    name="addressSelect"
+                    id="addressSelect"
+                    onChange={onChange}
+                  >
                     <option value="">-- Veuillez choisir une adresse --</option>
                     {addresses.map((address, index) => (
-                      <option key={index} value={address.id}>{address.number + " " + address.name + " - " + address.city}</option>
-                      ))}
-                  </select>                
+                      <option key={index} value={address.id}>
+                        {address.number +
+                          " " +
+                          address.name +
+                          " - " +
+                          address.city}
+                      </option>
+                    ))}
+                  </select>
                 )}
                 {isAddressesLoading && (
                   <div>
-                    <p>Veuillez saisir une addresse dans 
-                    <span className="font-bold"><Link href="/mon-compte"> votre compte </Link></span>
-                    compte avant de procéder au paiement.</p>
+                    <p>
+                      Veuillez saisir une addresse dans
+                      <span className="font-bold">
+                        <Link href="/mon-compte"> votre compte </Link>
+                      </span>
+                      compte avant de procéder au paiement.
+                    </p>
                   </div>
                 )}
                 <button
                   onClick={payBasket}
                   className="bg-red m-5 w-full font-bold text-white rounded-lg btn-payment"
                   disabled={!active}
-                  id='btnPayBasket'
-                  >
+                  id="btnPayBasket"
+                >
                   Procéder au paiement
                 </button>
               </div>

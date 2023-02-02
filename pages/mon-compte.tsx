@@ -42,9 +42,9 @@ export default function MyAccount() {
 
   const isLoggedIn = () => {
     if (!token) {
-      Router.push('/connexion');
+      Router.push("/connexion");
     }
-  }
+  };
 
   const getUserInformations = async () => {
     const response = await fetch(
@@ -104,7 +104,7 @@ export default function MyAccount() {
       setIsCommandsLoading(false);
     }
   };
-  
+
   useEffect(() => {
     isLoggedIn();
     getUserInformations();
@@ -138,7 +138,7 @@ export default function MyAccount() {
   }
 
   function logout() {
-    Cookies.remove('token');
+    Cookies.remove("token");
     Router.push("/connexion");
   }
 
@@ -188,7 +188,9 @@ export default function MyAccount() {
               {subMenu == "address" && (
                 <Address isLoading={isLoading} setIsLoading={setIsLoading} />
               )}
-              {subMenu == "orders" && !isCommandsLoading && commands &&(
+              {subMenu == "orders" &&
+                !isCommandsLoading &&
+                commands &&
                 commands.map((command, index) => (
                   <Order
                     key={index}
@@ -197,12 +199,11 @@ export default function MyAccount() {
                     price={command.totalPrice}
                     date={command.date}
                   />
-                ))
-              )}
+                ))}
               {subMenu == "orders" && isCommandsLoading && (
                 <div className="mt-20">
                   <div className="mx-auto w-1/2 my-10 text-center">
-                    <h5>Vous n'avez pas encore effectué de commandes.</h5>
+                    <h5>Vous n&apos;avez pas encore effectué de commandes.</h5>
                   </div>
                 </div>
               )}

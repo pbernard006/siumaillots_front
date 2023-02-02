@@ -20,8 +20,8 @@ export default function CommandeEffectuee() {
   let sessionId = asPath.split("session_id=")[1];
   const validationCommand = async () => {
     const session = {
-      stripeCheckout: sessionId
-    }
+      stripeCheckout: sessionId,
+    };
     if (sessionId) {
       const token = Cookies.get("token");
       const response = await fetch(
@@ -34,23 +34,22 @@ export default function CommandeEffectuee() {
           },
           body: JSON.stringify(session),
         }
-        );
-        const result = await response.json();
-    }
-    else {
+      );
+      const result = await response.json();
+    } else {
       router.push("/");
     }
   };
 
   const playSiuuu = () => {
-    var audio = new Audio('/sounds/gracias_siuuu.mp3');
+    var audio = new Audio("/sounds/gracias_siuuu.mp3");
     audio.play();
-  }
+  };
 
   useEffect(() => {
     validationCommand();
   }, []);
-  
+
   return (
     <>
       <Head>
@@ -60,25 +59,31 @@ export default function CommandeEffectuee() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={josefinSans.className}>
-      <div id="emitter"></div>
+        <div id="emitter"></div>
         <Header />
-          <div className="text-xl flex justify-center font-bold text-center my-14">
-            <h2>Votre commande a bien été effectuée !<br/>
-            SIU MAILLOT vous remercie de votre achat !<br/>
-            Un email de confirmation vous a été envoyé</h2>
-          </div>
-          <div className="container-siuuu">
-            <button onClick={playSiuuu}>
-              Célébrer la commande !
-            </button>
-            <Image src="/images/siuuu/ronaldo_siuuu.gif" alt="Ronaldo making SIUUU" width={700} height={200} priority/>
-          </div> 
-          <Link href={"/"}>
-            <button className="flex mx-auto bg-black text-white font-bold justify-center rounded-lg w-1/5">
-              Retour à l'accueil
-            </button>          
-          </Link>
-        </main>
+        <div className="text-xl flex justify-center font-bold text-center my-14">
+          <h2>
+            Votre commande a bien été effectuée !<br />
+            SIU MAILLOT vous remercie de votre achat !<br />
+            Un email de confirmation vous a été envoyé
+          </h2>
+        </div>
+        <div className="container-siuuu">
+          <button onClick={playSiuuu}>Célébrer la commande !</button>
+          <Image
+            src="/images/siuuu/ronaldo_siuuu.gif"
+            alt="Ronaldo making SIUUU"
+            width={700}
+            height={200}
+            priority
+          />
+        </div>
+        <Link href={"/"}>
+          <button className="flex mx-auto bg-black text-white font-bold justify-center rounded-lg w-1/5">
+            Retour à l&apos;accueil
+          </button>
+        </Link>
+      </main>
     </>
   );
 }
