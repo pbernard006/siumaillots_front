@@ -36,7 +36,6 @@ export default function Home() {
     });
     const dt = await response.json();
     setBestSales(dt);
-    console.log(dt);
     setIsBestSalesLoading(false);
   };
 
@@ -58,10 +57,8 @@ export default function Home() {
         <Header />
         <Carousel />
         {!isBestSalesLoading && (
-
           <HorizontalList title="Meilleures ventes" jerseys={bestSales}/>
           )}
-        {/* <HorizontalList title="Notre sélection des plus beaux maillots de la saison" jerseys=''/> */}
         <ImagesHomepage />
       </main>
     </>

@@ -5,7 +5,7 @@ export default function InputSearch(){
     const [isFirstClick, setIsFirstClick] = useState(true);
 
     const editValue = (event: any) => {
-        setValue(event.target.value)
+        setValue(event.target.value);
     }
     const removeValue = (event: any) => {
         if(isFirstClick){
@@ -16,6 +16,6 @@ export default function InputSearch(){
         }
     }
     return (
-        <input type={"text"} value={value} onClick={removeValue} onChange={editValue} className="w-full px-2 py-2 font-normal text-lg"/>
+        <input type={"text"} id="jerseySearch" name="jerseySearch" value={value} onClick={removeValue} onChange={editValue} className="w-full px-2 py-2 font-normal text-lg"/>
     )
 }

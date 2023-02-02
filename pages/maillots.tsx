@@ -23,6 +23,7 @@ export default function Maillots(){
     const { asPath } = useRouter();
     let id = asPath.split("id=")[1];
     let isCountry = asPath.split("pays=")[1] ? true : false;
+    let search = asPath.split("search=")[1];
     const competition = {
         competitionId: id
     };
@@ -64,10 +65,30 @@ export default function Maillots(){
         setJerseysList(dt);
     };
 
+    const getJerseysBySearch = async (searchValue:string) => {
+        const search = {
+            search: searchValue
+        }
+        const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/search/jersey", {
+            method: "POST",
+            body: JSON.stringify(search),
+        });
+        const dt = await response.json();
+        setJerseysList(dt);
+        setIsJerseysLoading(false);
+        
+    };
+    
+    if (search) {
+        getJerseysBySearch(search);
+    }
+    
     useEffect(() => {
-        getJerseysByTeams(id);
-        getJerseysByCompetition();
-        getTeamsByCompetition();
+        if (!search) {
+            getJerseysByTeams(id);
+            getJerseysByCompetition();
+            getTeamsByCompetition();
+        }
     }, []);
 
     return (
@@ -80,7 +101,7 @@ export default function Maillots(){
         </Head>
         <main className={josefinSans.className}>
             <Header/>
-            {!isTeamsLoading && !isCountry && (
+            {!isTeamsLoading && !isCountry && !search && (
                 <div className="ml-2.5 my-5">
                     <select className="border-solid border-2 border-black ml-20 rounded-lg" name="teams" id="teams" onChange={onChange} >
                         <option value="">-- Vous pouvez filtrer par équipe --</option>
