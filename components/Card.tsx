@@ -22,7 +22,7 @@ export function Card({ id, title, price, srcImage }: { id: string; title: string
       <hr className="w-1/2 m-auto mb-2"/>
       <div>{title}</div>
       <div className="rounded-lg p-px m-1 flex items-center justify-between">
-        {price}
+        {price} €
       </div>
     </div>
   );

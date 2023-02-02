@@ -2,7 +2,9 @@ import Head from "next/head"
 import React from "react";
 import { Josefin_Sans } from '@next/font/google'
 import Header from "../components/Header";
-import { Card } from "../components/Card";
+import { useEffect, useState } from "react";
+import { Team } from "../models/Team";
+import { Country } from "../components/Country";
 
 const josefinSans = Josefin_Sans({
     subsets: ['latin'],
@@ -10,15 +12,23 @@ const josefinSans = Josefin_Sans({
     display: 'swap'
 });
 
-const elemPrefix = "Maillot";
-const getId = (index: number) => `${elemPrefix}${index}`;
-const getItems = () =>
-  Array(20)
-    .fill(0)
-    .map((_, ind) => ({ id: getId(ind) }));
-
 export default function EquipesNationales(){
-    const [items] = React.useState(getItems);
+    const [teamsList,setTeamsList] = useState<Team[]>([]);
+    const [isTeamsLoading,setIsTeamsLoading] = useState(true);
+
+    const getTeams = async () => {
+        const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/nations", {
+          method: "POST",
+        });
+        const dt = await response.json();
+        setTeamsList(dt);  
+        setIsTeamsLoading(false);
+    };
+
+    useEffect(() => {
+        getTeams();
+    }, []);
+
 
     return (
         <>
@@ -30,37 +40,18 @@ export default function EquipesNationales(){
         </Head>
         <main className={josefinSans.className}>
             <Header/>
-            <div className="ml-2.5 my-5">
-                <select className=" h-1/4	 border-solid border-2 border-black ml-20 rounded-lg" name="teams" id="teams">
-                    <option value="">-- Vous pouvez filtrer par équipe nationale--</option>
-                    <option value="france">France</option>
-                    <option value="espagne">Espagne</option>
-                    <option value="italie">Italie</option>
-                    <option value="allemagne">Allemagne</option>
-                    <option value="brésil">Brésil</option>
-                    <option value="colombie">Colombie</option>
-                    <option value="paraguay">Paraguay</option>
-                    <option value="portugal">Portugal</option>
-                    <option value="belgique">Belgique</option>
-                    <option value="canada">Canada</option>
-                    <option value="iran">Iran</option>
-                    <option value="mexique">Mexique</option>
-                    <option value="sénégal">Sénégal</option>
-                    <option value="pologne">Pologne</option>
-                    <option value="maroc">Maroc</option>
-                </select>
-            </div>
-
-            <div className="grid grid-cols-5 gap-y-5 ml-20 justify-around text-center">
-                {items.map(({ id }) => (
-                    <Card
-                        id={id}
-                        title={id}
-                        srcImage="/images/maillots/maillot.png"
-                        price='30€'
+            {!isTeamsLoading && (
+                <div className="grid grid-cols-5 gap-y-5 justify-around text-center">
+                {teamsList.map((country, index) => (
+                    <Country
+                    key={index}
+                    name={country.name}
+                    src={country.logo}
+                    link={"/maillots?id=" + country.id + "&pays=" + (country.name).replace(' ','-')}
                     />
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
         </main>
         </>
     )

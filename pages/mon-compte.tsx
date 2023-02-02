@@ -12,6 +12,8 @@ import Orders from "../components/Orders";
 import { User } from "../models/User";
 import Cookies from "js-cookie";
 import { AddressModel } from "../models/AddressModel";
+import Router from "next/router";
+
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   weight: ["300"],
@@ -35,6 +37,12 @@ export default function MyAccount() {
     setAddressEdit,
   } = useContext(UserContext);
   const token = Cookies.get("token");
+
+  const isLoggedIn = () => {
+    if (!token) {
+      Router.push('/connexion');
+    }
+  }
 
   const getUserInformations = async () => {
     const response = await fetch(
@@ -80,6 +88,7 @@ export default function MyAccount() {
   };
 
   useEffect(() => {
+    isLoggedIn();
     getUserInformations();
   }, [isLoading]);
 
@@ -108,6 +117,12 @@ export default function MyAccount() {
 
     return undefined;
   }
+
+  function logout() {
+    Cookies.remove('token');
+    Router.push("/connexion");
+  }
+
   return (
     <>
       <Head>
@@ -140,7 +155,9 @@ export default function MyAccount() {
                   selected={isOrdersSelected}
                 />
               </div>
-              <ElementsProfile name="Déconnexion" selected={false} />
+              <div onClick={logout}>
+                <ElementsProfile name="Déconnexion" selected={false} />
+              </div>
             </div>
             <div className="w-9/12">
               {subMenu == "informations" && (

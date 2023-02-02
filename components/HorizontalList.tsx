@@ -3,22 +3,13 @@ import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import { LeftArrow, RightArrow } from "./Arrows";
 import { Card } from "./Card";
 import usePreventBodyScroll from "./UsePreventBodyScroll";
+import { Jersey } from "../models/Jersey";
 
 type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
 
-const elemPrefix = "Maillot";
-const getId = (index: number) => `${elemPrefix}${index}`;
-
-const getItems = () =>
-  Array(20)
-    .fill(0)
-    .map((_, ind) => ({ id: getId(ind) }));
-
-
-function HorizontalList({title}: { title: string}) {
-  const [items] = React.useState(getItems);
+function HorizontalList({title, jerseys}: { title: string; jerseys: Jersey[]}) {
   const { disableScroll, enableScroll } = usePreventBodyScroll();
-
+console.log(jerseys);
   return (
     <div className="my-20 mx-20 text-center">
         <h2 className="font-bold mb-3">{title}</h2>
@@ -28,12 +19,13 @@ function HorizontalList({title}: { title: string}) {
             RightArrow={RightArrow}
             onWheel={onWheel}
             >
-            {items.map(({ id }) => (
+            {jerseys.map((jersey, index) => (
                 <Card
-                  id={id}
-                  title={id}
-                  srcImage="/images/maillots/maillot.png"
-                  price='30€'
+                  key={index}
+                  id={jersey.id}
+                  title={jersey.name}
+                  srcImage={process.env.NEXT_PUBLIC_API_HOST + jersey.filePath}
+                  price={jersey.price}
                 />
             ))}
             </ScrollMenu>

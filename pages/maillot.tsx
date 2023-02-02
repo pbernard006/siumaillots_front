@@ -22,6 +22,9 @@ export default function Maillot() {
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState("");
 
+  const token = Cookies.get("token");
+  const route = useRouter();
+
   const { asPath } = useRouter();
   let jerseyId = asPath.split("id=")[1];
 
@@ -42,26 +45,31 @@ export default function Maillot() {
   }, []);
 
   const addToBasket = async () => {
-    const product = {
-      jerseyId: jerseyId,
-      size: size,
-      quantity: quantity,
-    };
+    if (!token) {
+      route.push('/connexion');
+    }
+    if (!size || !quantity) {
+      alert('Veuillez saisir une taille une quantité');
+    } else {
+      const product = {
+        jerseyId: jerseyId,
+        size: size,
+        quantity: quantity,
+      };
 
-    const token = Cookies.get("token");
-
-    const response = await fetch(
-      process.env.NEXT_PUBLIC_API_HOST + "/basket/add/jersey",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(product),
-      }
-    );
-    const result = await response.json();
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_HOST + "/basket/add/jersey",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(product),
+        }
+      );
+      const result = await response.json();
+    }
   };
 
   return (
@@ -86,7 +94,7 @@ export default function Maillot() {
             </div>
             <div className="flex flex-col justify-around">
               <div className="font-bold">{jersey?.name}</div>
-              <div>{jersey?.price}</div>
+              <div>{jersey?.price} €</div>
               <select
                 onChange={(e) => setSize(e.target.value)}
                 className="border-solid border-2 border-black rounded-lg"

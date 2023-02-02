@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { JerseyFromBasket } from "../models/JerseyFromBasket";
 import Router from "next/router";
+import { useRouter } from "next/router";
 
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
@@ -14,20 +15,29 @@ const josefinSans = Josefin_Sans({
   display: "swap",
 });
 
-// const elemPrefix = "Maillot";
-// const getId = (index: number) => `${elemPrefix}${index}`;
-// const getItems = () =>
-//   Array(3)
-//     .fill(0)
-//     .map((_, ind) => ({ id: getId(ind) }));
-
 export default function Panier() {
-  // const [items] = React.useState(getItems);
-  // const [jerseysList,setJerseysList] = useState<Jersey[]>([]);
   const [jerseys, setJerseys] = useState<JerseyFromBasket[]>([]);
   const [basketId, setBasketId] = useState("");
+  const [total, setTotal] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const token = Cookies.get("token");
+  const route = useRouter();
+  const [failed, setFailed] = useState(true);
+
+  const isLoggedIn = () => {
+    if (!token) {
+      route.push('/connexion');
+    }
+  }
+
+  const getStatus = () => {
+    const statusCommand = route.query.status;
+    console.log(statusCommand);
+    if(statusCommand == 'fail' && failed) {
+      alert("Votre commande a échoué, veuillez essayer plus tard...")
+      setFailed(false);
+    }
+  }
 
   const getJerseys = async () => {
     const response = await fetch(
@@ -41,6 +51,7 @@ export default function Panier() {
     );
     const dt = await response.json();
     setBasketId(dt.basketId);
+    setTotal(dt.totalPrice);
     setJerseys(dt.jerseys);
     setIsLoading(false);
   };
@@ -70,8 +81,11 @@ export default function Panier() {
   };
 
   useEffect(() => {
+    isLoggedIn();
     getJerseys();
   }, []);
+  getStatus();
+
   return (
     <>
       <Head>
@@ -82,31 +96,28 @@ export default function Panier() {
       </Head>
       <main className={josefinSans.className}>
         <Header />
-        {!isLoading && (
+        {!jerseys && (
+          <div className="text-xl flex justify-center font-bold text-center my-20">
+            <h1>Votre panier est vide ...<br/>
+            N'hésites pas à ajouter un SIUUUU maillot !</h1>
+          </div>
+        )}
+        {!isLoading && jerseys && (
           <div className="flex justify-center my-20">
             <div className="flex flex-col gap-4 w-5/12  text-center">
-              {jerseys.map((jersey) => (
+              {jerseys?.map((jersey, index) => (
                 <JerseyBasket
-                  key={jersey.jerseyId}
+                  key={index}
                   id={jersey.jerseyId}
                   size={jersey.size}
                   quantity={jersey.quantity}
                 />
               ))}
-
-              {/* {basket.map((product)) => {
-                            <JerseyBasket
-                                title={id}
-                                itemId={id}
-                                key={id}
-                                />
-                            ))}
-                        }); */}
             </div>
             <div className="ml-40">
               <div className="flex m-5 justify-center m-auto font-bold">
                 <h4 className="uppercase ">Total : </h4>
-                <h4 className="ml-3"> TODO :CALCULER LE PRIX TOTAL</h4>
+                <h4 className="ml-3">{total} €</h4>
               </div>
               <div className="mt-5">
                 <button
