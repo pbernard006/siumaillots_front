@@ -43,7 +43,7 @@ export default function EquipesNationales() {
       <main className={josefinSans.className}>
         <Header />
         {!isTeamsLoading && (
-          <div className="grid grid-cols-5 gap-y-5 justify-around text-center">
+          <div className="grid grid-cols-5 gap-y-5 mt-20 justify-around text-center">
             {teamsList.map((country, index) => (
               <Country
                 key={index}
