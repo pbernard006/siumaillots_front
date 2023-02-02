@@ -56,7 +56,7 @@ export default function Home() {
       <main className={josefinSans.className}>
         <Header />
         <Carousel />
-        {!isBestSalesLoading && (
+        {!isBestSalesLoading && bestSales && (
           <HorizontalList title="Meilleures ventes" jerseys={bestSales}/>
           )}
         <ImagesHomepage />
