@@ -1,60 +1,60 @@
-import { redirect } from "next/dist/server/api-utils";
-import { createContext, useContext, useState } from "react";
-import InputLogin from "./InputLogin";
-import { UserContext } from "../contexts/UserContext";
-import Link from "next/link";
-import Router from "next/router";
-import Cookies from "js-cookie";
+import { redirect } from 'next/dist/server/api-utils'
+import { createContext, useContext, useState } from 'react'
+import InputLogin from './InputLogin'
+import { UserContext } from '../contexts/UserContext'
+import Link from 'next/link'
+import Router from 'next/router'
+import Cookies from 'js-cookie'
 
 export default function Login() {
-  const [loginValue, setLoginValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const [error, setError] = useState(false);
+  const [loginValue, setLoginValue] = useState('')
+  const [passwordValue, setPasswordValue] = useState('')
+  const [error, setError] = useState(false)
 
   const login = async (login: string, password: string) => {
     const credentials = {
       username: login,
       password: password,
-    };
+    }
 
-    const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/login", {
-      method: "POST",
+    const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + '/login', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(credentials),
-    });
-    const result = await response.json();
+    })
+    const result = await response.json()
 
     if (response.status == 200) {
       // Get userId
       const userIdResponse = await fetch(
-        process.env.NEXT_PUBLIC_API_HOST + "/users/current",
+        process.env.NEXT_PUBLIC_API_HOST + '/users/current',
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${result.token}`,
           },
-        }
-      );
-      const userIdResult = await userIdResponse.json();
+        },
+      )
+      const userIdResult = await userIdResponse.json()
 
-      setError(false);
+      setError(false)
 
-      Cookies.set("id", userIdResult.id);
-      Cookies.set("token", result.token);
-      Router.push("/");
+      Cookies.set('id', userIdResult.id)
+      Cookies.set('token', result.token)
+      Router.push('/')
     } else {
-      setError(true);
+      setError(true)
     }
-  };
+  }
 
   return (
     <>
       <div className="container mx-auto">
         <div>
-          <span className={`${error ? "text-red-700" : "hidden"}`}>
+          <span className={`${error ? 'text-red-700' : 'hidden'}`}>
             Une erreur est survenue, veuillez réessayer.
           </span>
         </div>
@@ -82,5 +82,5 @@ export default function Login() {
         </button>
       </div>
     </>
-  );
+  )
 }

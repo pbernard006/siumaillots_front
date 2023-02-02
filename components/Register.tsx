@@ -1,21 +1,21 @@
-import InputLogin from "./InputLogin";
-import { UserContext } from "../contexts/UserContext";
-import Router from "next/router";
-import { useContext, useState } from "react";
-import Cookies from "js-cookie";
+import InputLogin from './InputLogin'
+import { UserContext } from '../contexts/UserContext'
+import Router from 'next/router'
+import { useContext, useState } from 'react'
+import Cookies from 'js-cookie'
 
 export default function Register() {
-  const [loginValue, setLoginValue] = useState("");
-  const [firstNameValue, setFirstNameValue] = useState("");
-  const [lastNameValue, setLastNameValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const [error, setError] = useState(false);
+  const [loginValue, setLoginValue] = useState('')
+  const [firstNameValue, setFirstNameValue] = useState('')
+  const [lastNameValue, setLastNameValue] = useState('')
+  const [passwordValue, setPasswordValue] = useState('')
+  const [error, setError] = useState(false)
 
   const register = async (
     email: string,
     firstName: string,
     lastName: string,
-    password: string
+    password: string,
   ) => {
     const credentials = {
       email: email,
@@ -24,68 +24,68 @@ export default function Register() {
       lastName: lastName,
       addresses: [],
       orders: [],
-    };
+    }
 
-    const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/users", {
-      method: "POST",
+    const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + '/users', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(credentials),
-    });
-    const result = await response.json();
+    })
+    const result = await response.json()
 
     if (response.status == 201) {
       // Connexion
       const loginCredentials = {
         username: email,
         password: password,
-      };
+      }
 
       const loginResponse = await fetch(
-        process.env.NEXT_PUBLIC_API_HOST + "/login",
+        process.env.NEXT_PUBLIC_API_HOST + '/login',
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(loginCredentials),
-        }
-      );
-      const loginResult = await loginResponse.json();
+        },
+      )
+      const loginResult = await loginResponse.json()
 
       if (loginResponse.status == 200) {
         // Get userId
         const userIdResponse = await fetch(
-          process.env.NEXT_PUBLIC_API_HOST + "/users/current",
+          process.env.NEXT_PUBLIC_API_HOST + '/users/current',
           {
-            method: "GET",
+            method: 'GET',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               Authorization: `Bearer ${loginResult.token}`,
             },
-          }
-        );
-        const userIdResult = await userIdResponse.json();
+          },
+        )
+        const userIdResult = await userIdResponse.json()
 
-        setError(false);
+        setError(false)
 
-        Cookies.set("id", userIdResult.id);
-        Cookies.set("token", loginResult.token);
-        Router.push("/");
+        Cookies.set('id', userIdResult.id)
+        Cookies.set('token', loginResult.token)
+        Router.push('/')
       } else {
-        setError(true);
+        setError(true)
       }
     } else {
-      setError(true);
+      setError(true)
     }
-  };
+  }
 
   return (
     <>
       <div className="containter mx-auto">
         <div>
-          <span className={`${error ? "text-red-700" : "hidden"}`}>
+          <span className={`${error ? 'text-red-700' : 'hidden'}`}>
             Une erreur est survenue, veuillez réessayer.
           </span>
         </div>
@@ -131,5 +131,5 @@ export default function Register() {
         </button>
       </div>
     </>
-  );
+  )
 }

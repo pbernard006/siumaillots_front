@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { Node } from "typescript";
-import Login from "./Login";
-import Register from "./Register";
+import { useState } from 'react'
+import { Node } from 'typescript'
+import Login from './Login'
+import Register from './Register'
 
 export default function HubLogin() {
-  const [isConnection, setIsConnection] = useState(true);
+  const [isConnection, setIsConnection] = useState(true)
   const displayComponent = (event: any) => {
-    const actives = document.querySelectorAll(".active");
+    const actives = document.querySelectorAll('.active')
 
-    [].forEach.call(actives, function (el: Element) {
-      el.classList.remove("active");
-    });
+    ;[].forEach.call(actives, function (el: Element) {
+      el.classList.remove('active')
+    })
 
     //actives.classList.remove("active");
-    if (event.target.id == "tabs-home-tab") {
-      setIsConnection(false);
+    if (event.target.id == 'tabs-home-tab') {
+      setIsConnection(false)
     } else {
-      setIsConnection(true);
+      setIsConnection(true)
     }
-    event.target.classList.add("active");
-  };
+    event.target.classList.add('active')
+  }
   return (
     <div className="container mx-auto text-lg">
       <ul
@@ -83,5 +83,5 @@ export default function HubLogin() {
       </ul>
       {isConnection ? <Login /> : <Register />}
     </div>
-  );
+  )
 }

@@ -1,14 +1,14 @@
-import Head from "next/head";
-import { Josefin_Sans } from "@next/font/google";
-import styles from "../styles/Home.module.css";
-import Header from "../components/Header";
-import LeaguesList from "../components/LeaguesList";
+import Head from 'next/head'
+import { Josefin_Sans } from '@next/font/google'
+import styles from '../styles/Home.module.css'
+import Header from '../components/Header'
+import LeaguesList from '../components/LeaguesList'
 
 const josefinSans = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["300"],
-  display: "swap",
-});
+  subsets: ['latin'],
+  weight: ['300'],
+  display: 'swap',
+})
 
 export default function Clubs() {
   return (
@@ -24,5 +24,5 @@ export default function Clubs() {
         <LeaguesList />
       </main>
     </>
-  );
+  )
 }

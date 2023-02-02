@@ -1,8 +1,8 @@
-import { UserContext } from "../contexts/UserContext";
-import { Dispatch, SetStateAction, useContext, useEffect } from "react";
-import { User } from "../models/User";
-import Cookies from "js-cookie";
-import { AddressModel } from "../models/AddressModel";
+import { UserContext } from '../contexts/UserContext'
+import { Dispatch, SetStateAction, useContext, useEffect } from 'react'
+import { User } from '../models/User'
+import Cookies from 'js-cookie'
+import { AddressModel } from '../models/AddressModel'
 
 export default function Button({
   valueChanged,
@@ -10,15 +10,15 @@ export default function Button({
   addressChanged,
   isNewAddress,
 }: {
-  valueChanged: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
-  addressChanged: boolean;
-  isNewAddress: boolean;
+  valueChanged: boolean
+  setIsLoading: Dispatch<SetStateAction<boolean>>
+  addressChanged: boolean
+  isNewAddress: boolean
 }) {
-  const token = Cookies.get("token");
-  const id = Cookies.get("id");
+  const token = Cookies.get('token')
+  const id = Cookies.get('id')
   const { user, setUser, userEdit, setUserEdit, addressEdit } =
-    useContext(UserContext);
+    useContext(UserContext)
 
   const saveUser = async () => {
     if (addressChanged) {
@@ -32,23 +32,23 @@ export default function Button({
           complement: addressEdit.complement,
           isFavorite: true,
           user: `/users/${id}`,
-        };
+        }
 
         const response = await fetch(
           process.env.NEXT_PUBLIC_API_HOST + `/addresses`,
           {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(newAddress),
-          }
-        );
-        const result = await response.json();
+          },
+        )
+        const result = await response.json()
         if (response.status == 200) {
-          setIsLoading(true);
-          setIsLoading(false);
+          setIsLoading(true)
+          setIsLoading(false)
         }
       } else {
         // put
@@ -61,57 +61,55 @@ export default function Button({
           complement: addressEdit.complement,
           isFavorite: true,
           user: `/users/${id}`,
-        };
+        }
 
         const response = await fetch(
           process.env.NEXT_PUBLIC_API_HOST + `/addresses/${addressEdit.id}`,
           {
-            method: "PUT",
+            method: 'PUT',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(newAddress),
-          }
-        );
+          },
+        )
 
-        const result = await response.json();
+        const result = await response.json()
         if (response.status == 201) {
-          setIsLoading(true);
+          setIsLoading(true)
         }
       }
     } else {
       const response = await fetch(
         process.env.NEXT_PUBLIC_API_HOST + `/users/${id}`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(userEdit),
-        }
-      );
-      const result = await response.json();
+        },
+      )
+      const result = await response.json()
 
       if (response.status == 200) {
-        setIsLoading(true);
+        setIsLoading(true)
       }
     }
-  };
+  }
 
   return (
     <>
       <div
         onClick={saveUser}
         className={`${
-          valueChanged ? "bg-black" : "bg-slate-300"
+          valueChanged ? 'bg-black' : 'bg-slate-300'
         }  text-center text-white py-2 text-xl mt-8 cursor-pointer`}
       >
-        <span className="rounded-none" >
-          Enregistrer
-        </span>
+        <span className="rounded-none">Enregistrer</span>
       </div>
     </>
-  );
+  )
 }

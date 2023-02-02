@@ -4,25 +4,25 @@ import {
   useContext,
   useEffect,
   useState,
-} from "react";
-import Input from "./Input";
-import Button from "./Button";
-import { TypeValue } from "../models/TypeValue";
-import { UserContext } from "../contexts/UserContext";
-import { User } from "../models/User";
-import { AddressModel } from "../models/AddressModel";
-import Cookies from "js-cookie";
-import { type } from "os";
+} from 'react'
+import Input from './Input'
+import Button from './Button'
+import { TypeValue } from '../models/TypeValue'
+import { UserContext } from '../contexts/UserContext'
+import { User } from '../models/User'
+import { AddressModel } from '../models/AddressModel'
+import Cookies from 'js-cookie'
+import { type } from 'os'
 
 export default function Address({
   isLoading,
   setIsLoading,
 }: {
-  isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean
+  setIsLoading: Dispatch<SetStateAction<boolean>>
 }) {
-  const [isValueChanged, setIsValueChanged] = useState(false);
-  const [typeValue, setTypeValue] = useState(new TypeValue());
+  const [isValueChanged, setIsValueChanged] = useState(false)
+  const [typeValue, setTypeValue] = useState(new TypeValue())
   const {
     user,
     setUser,
@@ -32,80 +32,80 @@ export default function Address({
     setAddress,
     addressEdit,
     setAddressEdit,
-  } = useContext(UserContext);
-  const [isFirstEdit, setIsFirstEdit] = useState(true);
-  const [isDisplayAddressForm, setIsDisplayAddressForm] = useState(false);
+  } = useContext(UserContext)
+  const [isFirstEdit, setIsFirstEdit] = useState(true)
+  const [isDisplayAddressForm, setIsDisplayAddressForm] = useState(false)
 
-  const id: string | undefined = Cookies.get("id");
-  const token: string | undefined = Cookies.get("token");
+  const id: string | undefined = Cookies.get('id')
+  const token: string | undefined = Cookies.get('token')
   const displayAddressForm = () => {
-    setIsDisplayAddressForm(true);
-  };
+    setIsDisplayAddressForm(true)
+  }
 
   useEffect(() => {
     if (isFirstEdit) {
-      setIsFirstEdit(false);
+      setIsFirstEdit(false)
     }
-    updateUser(typeValue);
+    updateUser(typeValue)
 
     if (user.addresses && user.addresses.length > 0) {
-      setIsDisplayAddressForm(true);
+      setIsDisplayAddressForm(true)
     }
-  }, [typeValue]);
+  }, [typeValue])
 
   const updateUser = (typeValue: TypeValue) => {
-    const type: string = typeValue.type ? typeValue.type : "";
+    const type: string = typeValue.type ? typeValue.type : ''
     switch (type) {
-      case "name": {
+      case 'name': {
         let newAddress: AddressModel = addressEdit
           ? addressEdit
-          : new AddressModel();
-        newAddress.name = typeValue.value;
-        setAddressEdit(newAddress);
-        break;
+          : new AddressModel()
+        newAddress.name = typeValue.value
+        setAddressEdit(newAddress)
+        break
       }
-      case "number": {
+      case 'number': {
         let newAddress: AddressModel = addressEdit
           ? addressEdit
-          : new AddressModel();
-        newAddress.number = typeValue.value;
-        setAddressEdit(newAddress);
-        break;
+          : new AddressModel()
+        newAddress.number = typeValue.value
+        setAddressEdit(newAddress)
+        break
       }
-      case "zipCode": {
+      case 'zipCode': {
         let newAddress: AddressModel = addressEdit
           ? addressEdit
-          : new AddressModel();
-        newAddress.zipCode = typeValue.value;
-        setAddressEdit(newAddress);
-        break;
+          : new AddressModel()
+        newAddress.zipCode = typeValue.value
+        setAddressEdit(newAddress)
+        break
       }
-      case "city": {
+      case 'city': {
         let newAddress: AddressModel = addressEdit
           ? addressEdit
-          : new AddressModel();
-        newAddress.city = typeValue.value;
-        setAddressEdit(newAddress);
-        break;
+          : new AddressModel()
+        newAddress.city = typeValue.value
+        setAddressEdit(newAddress)
+        break
       }
-      case "country": {
+      case 'country': {
         let newAddress: AddressModel = addressEdit
           ? addressEdit
-          : new AddressModel();
-        newAddress.country = typeValue.value;
-        setAddressEdit(newAddress);
-        break;
+          : new AddressModel()
+        newAddress.country = typeValue.value
+        setAddressEdit(newAddress)
+        break
       }
-      case "complement": {
+      case 'complement': {
         let newAddress: AddressModel = addressEdit
           ? addressEdit
-          : new AddressModel();
-        newAddress.complement = typeValue.value;
-        setAddressEdit(newAddress);
-        break;
+          : new AddressModel()
+        newAddress.complement = typeValue.value
+        setAddressEdit(newAddress)
+        break
       }
     }
-  };
+  }
 
   if (!isDisplayAddressForm) {
     return (
@@ -118,19 +118,22 @@ export default function Address({
                 l&apos;ajouter !
               </span>
             </div>
-            <div onClick={displayAddressForm} className="bg-black text-center cursor-pointer text-white py-2 text-xl mt-8">
+            <div
+              onClick={displayAddressForm}
+              className="bg-black text-center cursor-pointer text-white py-2 text-xl mt-8"
+            >
               <span>Ajouter mon adresse</span>
             </div>
           </div>
         </div>
       </>
-    );
+    )
   } else {
     return (
       <>
         <div className="mt-20">
           <div className="mx-auto w-10/12 my-10">
-            <span>{"numéro de rue : ".toUpperCase()}</span>
+            <span>{'numéro de rue : '.toUpperCase()}</span>
             <div className="border-input mb-4">
               <Input
                 type="number"
@@ -139,26 +142,26 @@ export default function Address({
                   user.addresses[0] &&
                   user.addresses[0].number
                     ? user.addresses[0].number
-                    : ""
+                    : ''
                 }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
             </div>
-            <span>{"nom de rue : ".toUpperCase()}</span>
+            <span>{'nom de rue : '.toUpperCase()}</span>
             <div className="border-input mb-4">
               <Input
                 type="name"
                 data={
                   user.addresses && user.addresses[0] && user.addresses[0].name
                     ? user.addresses[0].name
-                    : ""
+                    : ''
                 }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
             </div>
-            <span>{"code postal : ".toUpperCase()}</span>
+            <span>{'code postal : '.toUpperCase()}</span>
             <div className="border-input mb-4">
               <Input
                 type="zipCode"
@@ -167,26 +170,26 @@ export default function Address({
                   user.addresses[0] &&
                   user.addresses[0].zipCode
                     ? user.addresses[0].zipCode
-                    : ""
+                    : ''
                 }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
             </div>
-            <span>{"ville : ".toUpperCase()}</span>
+            <span>{'ville : '.toUpperCase()}</span>
             <div className="border-input mb-4">
               <Input
                 type="city"
                 data={
                   user.addresses && user.addresses[0] && user.addresses[0].city
                     ? user.addresses[0].city
-                    : ""
+                    : ''
                 }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
             </div>
-            <span>{"pays : ".toUpperCase()}</span>
+            <span>{'pays : '.toUpperCase()}</span>
             <div className="border-input mb-4">
               <Input
                 type="country"
@@ -195,7 +198,7 @@ export default function Address({
                   user.addresses[0] &&
                   user.addresses[0].country
                     ? user.addresses[0].country
-                    : ""
+                    : ''
                 }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
@@ -210,7 +213,7 @@ export default function Address({
                   user.addresses[0] &&
                   user.addresses[0].complement
                     ? user.addresses[0].complement
-                    : ""
+                    : ''
                 }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
@@ -229,6 +232,6 @@ export default function Address({
           </div>
         </div>
       </>
-    );
+    )
   }
 }

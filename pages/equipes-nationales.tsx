@@ -1,36 +1,36 @@
-import Head from "next/head";
-import React from "react";
-import { Josefin_Sans } from "@next/font/google";
-import Header from "../components/Header";
-import { useEffect, useState } from "react";
-import { Team } from "../models/Team";
-import { Country } from "../components/Country";
+import Head from 'next/head'
+import React from 'react'
+import { Josefin_Sans } from '@next/font/google'
+import Header from '../components/Header'
+import { useEffect, useState } from 'react'
+import { Team } from '../models/Team'
+import { Country } from '../components/Country'
 
 const josefinSans = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["300"],
-  display: "swap",
-});
+  subsets: ['latin'],
+  weight: ['300'],
+  display: 'swap',
+})
 
 export default function EquipesNationales() {
-  const [teamsList, setTeamsList] = useState<Team[]>([]);
-  const [isTeamsLoading, setIsTeamsLoading] = useState(true);
+  const [teamsList, setTeamsList] = useState<Team[]>([])
+  const [isTeamsLoading, setIsTeamsLoading] = useState(true)
 
   const getTeams = async () => {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_HOST + "/nations",
+      process.env.NEXT_PUBLIC_API_HOST + '/nations',
       {
-        method: "POST",
-      }
-    );
-    const dt = await response.json();
-    setTeamsList(dt);
-    setIsTeamsLoading(false);
-  };
+        method: 'POST',
+      },
+    )
+    const dt = await response.json()
+    setTeamsList(dt)
+    setIsTeamsLoading(false)
+  }
 
   useEffect(() => {
-    getTeams();
-  }, []);
+    getTeams()
+  }, [])
 
   return (
     <>
@@ -50,10 +50,10 @@ export default function EquipesNationales() {
                 name={country.name}
                 src={process.env.NEXT_PUBLIC_API_HOST + country.logo}
                 link={
-                  "/maillots?id=" +
+                  '/maillots?id=' +
                   country.id +
-                  "&pays=" +
-                  country.name.replace(" ", "-")
+                  '&pays=' +
+                  country.name.replace(' ', '-')
                 }
               />
             ))}
@@ -61,5 +61,5 @@ export default function EquipesNationales() {
         )}
       </main>
     </>
-  );
+  )
 }
