@@ -50,7 +50,7 @@ export default function CommandeEffectuee() {
   useEffect(() => {
     validationCommand();
   }, []);
-
+  
   return (
     <>
       <Head>
@@ -63,8 +63,9 @@ export default function CommandeEffectuee() {
       <div id="emitter"></div>
         <Header />
           <div className="text-xl flex justify-center font-bold text-center my-14">
-            <h1>Votre commande a bien été effectuée !<br/>
-            SIU MAILLOT vous remercie de votre achat !</h1>
+            <h2>Votre commande a bien été effectuée !<br/>
+            SIU MAILLOT vous remercie de votre achat !<br/>
+            Un email de confirmation vous a été envoyé</h2>
           </div>
           <div className="container-siuuu">
             <button onClick={playSiuuu}>
