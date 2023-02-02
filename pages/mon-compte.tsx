@@ -11,6 +11,7 @@ import Address from "../components/Address";
 import Orders from "../components/Orders";
 import { User } from "../models/User";
 import Cookies from "js-cookie";
+import { AddressModel } from "../models/AddressModel";
 import Router from "next/router";
 
 const josefinSans = Josefin_Sans({
@@ -25,7 +26,16 @@ export default function MyAccount() {
   const [isInformationsSelected, setIsInformationsSelected] = useState(true);
   const [isAddressSelected, setIsAddressSelected] = useState(false);
   const [isOrdersSelected, setIsOrdersSelected] = useState(false);
-  const { user, setUser, userEdit, setUserEdit } = useContext(UserContext);
+  const {
+    user,
+    setUser,
+    userEdit,
+    setUserEdit,
+    address,
+    setAddress,
+    addressEdit,
+    setAddressEdit,
+  } = useContext(UserContext);
   const token = Cookies.get("token");
 
   const isLoggedIn = () => {
@@ -48,14 +58,32 @@ export default function MyAccount() {
     const dt = await response.json();
 
     let newUser: User = new User();
-    user.addresses = [];
-    user.email = dt.email;
-    user.firstName = dt.firstName;
-    user.lastName = dt.lastName;
-    user.orders = [];
-    user.roles = [];
-    user.id = dt.id;
+    newUser.email = dt.email;
+    newUser.firstName = dt.firstName;
+    newUser.lastName = dt.lastName;
+    newUser.orders = [];
+    newUser.roles = [];
+    newUser.id = dt.id;
 
+    if (dt.addresses && dt.addresses.length > 0) {
+      let addressesTab: AddressModel[] = [];
+      addressesTab[0] = new AddressModel();
+      addressesTab[0].city = dt.addresses[0].city;
+      addressesTab[0].id = dt.addresses[0].id;
+      addressesTab[0].number = dt.addresses[0].number;
+      addressesTab[0].name = dt.addresses[0].name;
+      addressesTab[0].zipCode = dt.addresses[0].zipCode;
+      addressesTab[0].country = dt.addresses[0].country;
+      addressesTab[0].complement = dt.addresses[0].complement;
+      addressesTab[0].isFavorite = dt.addresses[0].isFavorite;
+      addressesTab[0].user = dt.addresses[0].user;
+
+      newUser.addresses = addressesTab;
+    }
+
+    console.log(user);
+
+    setUser(newUser);
     setIsLoading(false);
   };
 
@@ -138,7 +166,9 @@ export default function MyAccount() {
                   setIsLoading={setIsLoading}
                 />
               )}
-              {subMenu == "address" && <Address />}
+              {subMenu == "address" && (
+                <Address isLoading={isLoading} setIsLoading={setIsLoading} />
+              )}
               {subMenu == "orders" && <Orders />}
             </div>
           </div>
