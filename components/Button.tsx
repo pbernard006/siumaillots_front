@@ -103,13 +103,14 @@ export default function Button({
   return (
     <>
       <div
+        onClick={saveUser}
         className={`${
           valueChanged ? "bg-black" : "bg-slate-300"
-        }  text-center text-white py-2 text-xl mt-8`}
+        }  text-center text-white py-2 text-xl mt-8 cursor-pointer`}
       >
-        <button className="rounded-none" onClick={saveUser}>
+        <span className="rounded-none" >
           Enregistrer
-        </button>
+        </span>
       </div>
     </>
   );

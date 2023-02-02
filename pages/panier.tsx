@@ -8,7 +8,8 @@ import Cookies from "js-cookie";
 import { JerseyFromBasket } from "../models/JerseyFromBasket";
 import Router from "next/router";
 import { useRouter } from "next/router";
-
+import { Address } from "../models/Address";
+import Link from "next/link";
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   weight: ["300"],
@@ -17,12 +18,16 @@ const josefinSans = Josefin_Sans({
 
 export default function Panier() {
   const [jerseys, setJerseys] = useState<JerseyFromBasket[]>([]);
+  const [addresses, setAdresses] = useState<Address[]>([]);
+  const [address, setAdress] = useState<"">();
   const [basketId, setBasketId] = useState("");
   const [total, setTotal] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isAddressesLoading, setIsAddressesLoading] = useState(true);
   const token = Cookies.get("token");
   const route = useRouter();
   const [failed, setFailed] = useState(true);
+  const [active, setActive] = useState(false)
 
   const isLoggedIn = () => {
     if (!token) {
@@ -52,12 +57,17 @@ export default function Panier() {
     setBasketId(dt.basketId);
     setTotal(dt.totalPrice);
     setJerseys(dt.jerseys);
+    if (dt?.addresses?.length > 0) {
+      setAdresses(dt.addresses);
+      setIsAddressesLoading(false);
+    }
     setIsLoading(false);
   };
 
   const payBasket = async () => {
     const order = {
       orderId: basketId,
+      addressId: address,
     };
     const response = await fetch(
       process.env.NEXT_PUBLIC_API_HOST + "/create-checkout-session",
@@ -75,7 +85,19 @@ export default function Panier() {
       const url = result.url;
       Router.push(url);
     } else {
-      // Erreur
+      alert("Une erreur s'est produite, veuillez essayer plus tard...")
+    }
+  };
+
+  const onChange = (event:any) => {
+    const btnPayBasket = document.getElementById('btnPayBasket') as HTMLInputElement | null;
+    if (btnPayBasket) {
+      if (event.target.value !='') {
+        setActive(true);
+        setAdress(event.target.value);
+      } else {
+        setActive(false);
+      }
     }
   };
 
@@ -97,8 +119,8 @@ export default function Panier() {
         <Header />
         {!jerseys && (
           <div className="text-xl flex justify-center font-bold text-center my-20">
-            <h1>Votre panier est vide ...<br/>
-            N'hésite pas à ajouter un SIUUUU maillot !</h1>
+            <h1>Votre panier est vide...<br/>
+            N'hésitez pas à ajouter un SIUUUU maillot !</h1>
           </div>
         )}
         {!isLoading && jerseys && (
@@ -118,12 +140,28 @@ export default function Panier() {
                 <h4 className="uppercase ">Total : </h4>
                 <h4 className="ml-3">{total} €</h4>
               </div>
-              <div className="mt-5">
+              <div className="mt-5 flex flex-col items-center">
+                {!isAddressesLoading && (
+                  <select className="border-solid border-2 border-black rounded-lg" name="addressSelect" id="addressSelect" onChange={onChange} >
+                    <option value="">-- Veuillez choisir une adresse --</option>
+                    {addresses.map((address, index) => (
+                      <option key={index} value={address.id}>{address.number + " " + address.name + " - " + address.city}</option>
+                      ))}
+                  </select>                
+                )}
+                {isAddressesLoading && (
+                  <div>
+                    <p>Veuillez saisir une addresse dans 
+                    <span className="font-bold"><Link href="/mon-compte"> votre compte </Link></span>
+                    compte avant de procéder au paiement.</p>
+                  </div>
+                )}
                 <button
                   onClick={payBasket}
                   className="bg-red m-5 w-full font-bold text-white rounded-lg btn-payment"
-                  disabled
-                >
+                  disabled={!active}
+                  id='btnPayBasket'
+                  >
                   Procéder au paiement
                 </button>
               </div>
