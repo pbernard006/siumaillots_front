@@ -5,14 +5,14 @@ import InfoProfile from "../components/InfoProfile";
 import { Josefin_Sans } from "@next/font/google";
 import Head from "next/head";
 import { UserContext } from "../contexts/UserContext";
-import { useRef, useState, useContext, useEffect } from "react";
-import { MouseEventHandler } from "react";
+import { useState, useContext, useEffect } from "react";
 import Address from "../components/Address";
-import Orders from "../components/Orders";
+import Order from "../components/Orders";
 import { User } from "../models/User";
 import Cookies from "js-cookie";
 import { AddressModel } from "../models/AddressModel";
 import Router from "next/router";
+import { Command } from "../models/Command";
 
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
@@ -22,10 +22,12 @@ const josefinSans = Josefin_Sans({
 
 export default function MyAccount() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isCommandsLoading, setIsCommandsLoading] = useState(true);
   const [subMenu, setSubMenu] = useState("informations");
   const [isInformationsSelected, setIsInformationsSelected] = useState(true);
   const [isAddressSelected, setIsAddressSelected] = useState(false);
   const [isOrdersSelected, setIsOrdersSelected] = useState(false);
+  const [commands, setCommands] = useState<Command[]>([]);
   const {
     user,
     setUser,
@@ -81,15 +83,32 @@ export default function MyAccount() {
       newUser.addresses = addressesTab;
     }
 
-    console.log(user);
-
     setUser(newUser);
     setIsLoading(false);
   };
 
+  const getCommandHistory = async () => {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_HOST + `/command/history`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const dt = await response.json();
+    if (dt.length > 0) {
+      setCommands(dt);
+      setIsCommandsLoading(false);
+    }
+  };
+  
   useEffect(() => {
     isLoggedIn();
     getUserInformations();
+    getCommandHistory();
   }, [isLoading]);
 
   function displaySubMenu(subMenu: string) {
@@ -145,7 +164,7 @@ export default function MyAccount() {
               </div>
               <div onClick={() => displaySubMenu("address")}>
                 <ElementsProfile
-                  name="Mes adresses"
+                  name="Mon adresse"
                   selected={isAddressSelected}
                 />
               </div>
@@ -169,7 +188,24 @@ export default function MyAccount() {
               {subMenu == "address" && (
                 <Address isLoading={isLoading} setIsLoading={setIsLoading} />
               )}
-              {subMenu == "orders" && <Orders />}
+              {subMenu == "orders" && !isCommandsLoading && commands &&(
+                commands.map((command, index) => (
+                  <Order
+                    key={index}
+                    numero={command.number}
+                    status={command.status}
+                    price={command.totalPrice}
+                    date={command.date}
+                  />
+                ))
+              )}
+              {subMenu == "orders" && isCommandsLoading && (
+                <div className="mt-20">
+                  <div className="mx-auto w-1/2 my-10 text-center">
+                    <h5>Vous n'avez pas encore effectué de commandes.</h5>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
