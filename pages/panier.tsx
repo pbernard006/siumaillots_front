@@ -121,7 +121,8 @@ export default function Panier() {
               <div className="mt-5">
                 <button
                   onClick={payBasket}
-                  className="bg-black m-5 w-full font-bold text-white rounded-lg"
+                  className="bg-red m-5 w-full font-bold text-white rounded-lg btn-payment"
+                  disabled
                 >
                   Procéder au paiement
                 </button>

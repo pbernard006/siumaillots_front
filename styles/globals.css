@@ -75,3 +75,29 @@ textarea:focus, input:focus{
 .container-siuuu button:hover {
   opacity: .8;
 }
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: .8;
+}
+
+select {
+  cursor: pointer;
+  padding: 8px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background: #666;
+}
+
+button:disabled:hover {
+  opacity: 1;
+}
+
+.bg-red {
+  background: #c10000;
+}
