@@ -47,8 +47,11 @@ export default function Address({
       setIsFirstEdit(false);
     }
     updateUser(typeValue);
-    if (userEdit.addresses?.length != 0) {
-      displayAddressForm();
+
+    console.log(userEdit, user);
+
+    if (user.addresses && user.addresses.length > 0) {
+      setIsDisplayAddressForm(true);
     }
   }, [typeValue]);
 
@@ -56,43 +59,57 @@ export default function Address({
     const type: string = typeValue.type ? typeValue.type : "";
     switch (type) {
       case "name": {
-        let newAddress: AddressModel = addressEdit;
+        let newAddress: AddressModel = addressEdit
+          ? addressEdit
+          : new AddressModel();
         newAddress.name = typeValue.value;
         setAddressEdit(newAddress);
         break;
       }
       case "number": {
-        let newAddress: AddressModel = addressEdit;
+        let newAddress: AddressModel = addressEdit
+          ? addressEdit
+          : new AddressModel();
         newAddress.number = typeValue.value;
         setAddressEdit(newAddress);
         break;
       }
       case "zipCode": {
-        let newAddress: AddressModel = addressEdit;
+        let newAddress: AddressModel = addressEdit
+          ? addressEdit
+          : new AddressModel();
         newAddress.zipCode = typeValue.value;
         setAddressEdit(newAddress);
         break;
       }
       case "city": {
-        let newAddress: AddressModel = addressEdit;
+        let newAddress: AddressModel = addressEdit
+          ? addressEdit
+          : new AddressModel();
         newAddress.city = typeValue.value;
         setAddressEdit(newAddress);
         break;
       }
       case "country": {
-        let newAddress: AddressModel = addressEdit;
+        let newAddress: AddressModel = addressEdit
+          ? addressEdit
+          : new AddressModel();
         newAddress.country = typeValue.value;
         setAddressEdit(newAddress);
         break;
       }
       case "complement": {
-        let newAddress: AddressModel = addressEdit;
+        let newAddress: AddressModel = addressEdit
+          ? addressEdit
+          : new AddressModel();
         newAddress.complement = typeValue.value;
         setAddressEdit(newAddress);
         break;
       }
     }
   };
+
+  console.log(isDisplayAddressForm);
 
   if (!isDisplayAddressForm) {
     return (
@@ -121,7 +138,13 @@ export default function Address({
             <div className="border-input mb-4">
               <Input
                 type="number"
-                data={address.number ? address.number : ""}
+                data={
+                  user.addresses &&
+                  user.addresses[0] &&
+                  user.addresses[0].number
+                    ? user.addresses[0].number
+                    : ""
+                }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
@@ -130,7 +153,11 @@ export default function Address({
             <div className="border-input mb-4">
               <Input
                 type="name"
-                data={address.name ? address.name : ""}
+                data={
+                  user.addresses && user.addresses[0] && user.addresses[0].name
+                    ? user.addresses[0].name
+                    : ""
+                }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
@@ -139,7 +166,13 @@ export default function Address({
             <div className="border-input mb-4">
               <Input
                 type="zipCode"
-                data={address.zipCode ? address.zipCode : ""}
+                data={
+                  user.addresses &&
+                  user.addresses[0] &&
+                  user.addresses[0].zipCode
+                    ? user.addresses[0].zipCode
+                    : ""
+                }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
@@ -148,7 +181,11 @@ export default function Address({
             <div className="border-input mb-4">
               <Input
                 type="city"
-                data={address.city ? address.city : ""}
+                data={
+                  user.addresses && user.addresses[0] && user.addresses[0].city
+                    ? user.addresses[0].city
+                    : ""
+                }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
@@ -157,7 +194,13 @@ export default function Address({
             <div className="border-input mb-4">
               <Input
                 type="country"
-                data={address.country ? address.country : ""}
+                data={
+                  user.addresses &&
+                  user.addresses[0] &&
+                  user.addresses[0].country
+                    ? user.addresses[0].country
+                    : ""
+                }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
@@ -166,7 +209,13 @@ export default function Address({
             <div className="border-input mb-4">
               <Input
                 type="complement"
-                data={address.complement ? address.complement : ""}
+                data={
+                  user.addresses &&
+                  user.addresses[0] &&
+                  user.addresses[0].complement
+                    ? user.addresses[0].complement
+                    : ""
+                }
                 setIsValueChanged={setIsValueChanged}
                 setTypeValue={setTypeValue}
               />
@@ -175,7 +224,11 @@ export default function Address({
               valueChanged={isValueChanged}
               setIsLoading={setIsLoading}
               addressChanged={true}
-              isNewAddress={address ? false : true}
+              isNewAddress={
+                userEdit.addresses && userEdit.addresses?.length > 0
+                  ? false
+                  : true
+              }
             />
           </div>
         </div>

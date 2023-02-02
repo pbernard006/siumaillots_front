@@ -23,7 +23,6 @@ export default function Button({
   const saveUser = async () => {
     if (addressChanged) {
       if (isNewAddress) {
-        console.log(addressEdit);
         const newAddress: AddressModel = {
           number: addressEdit.number,
           name: addressEdit.name,
@@ -49,9 +48,37 @@ export default function Button({
         const result = await response.json();
         if (response.status == 200) {
           setIsLoading(true);
+          setIsLoading(false);
         }
       } else {
         // put
+        const newAddress: AddressModel = {
+          number: addressEdit.number,
+          name: addressEdit.name,
+          zipCode: addressEdit.zipCode,
+          city: addressEdit.city,
+          country: addressEdit.country,
+          complement: addressEdit.complement,
+          isFavorite: true,
+          user: `/users/${id}`,
+        };
+
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_API_HOST + `/addresses/${addressEdit.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(newAddress),
+          }
+        );
+
+        const result = await response.json();
+        if (response.status == 201) {
+          setIsLoading(true);
+        }
       }
     } else {
       const response = await fetch(
@@ -66,6 +93,7 @@ export default function Button({
         }
       );
       const result = await response.json();
+
       if (response.status == 200) {
         setIsLoading(true);
       }

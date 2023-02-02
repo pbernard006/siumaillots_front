@@ -11,6 +11,7 @@ import Address from "../components/Address";
 import Orders from "../components/Orders";
 import { User } from "../models/User";
 import Cookies from "js-cookie";
+import { AddressModel } from "../models/AddressModel";
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   weight: ["300"],
@@ -34,7 +35,6 @@ export default function MyAccount() {
     setAddressEdit,
   } = useContext(UserContext);
   const token = Cookies.get("token");
-  console.log(token);
 
   const getUserInformations = async () => {
     const response = await fetch(
@@ -50,7 +50,6 @@ export default function MyAccount() {
     const dt = await response.json();
 
     let newUser: User = new User();
-    newUser.addresses = dt.addresses;
     newUser.email = dt.email;
     newUser.firstName = dt.firstName;
     newUser.lastName = dt.lastName;
@@ -58,10 +57,24 @@ export default function MyAccount() {
     newUser.roles = [];
     newUser.id = dt.id;
 
-    if (newUser.addresses) {
-      setAddressEdit(newUser.addresses[0]);
-      setAddress(newUser.addresses[0]);
+    if (dt.addresses && dt.addresses.length > 0) {
+      let addressesTab: AddressModel[] = [];
+      addressesTab[0] = new AddressModel();
+      addressesTab[0].city = dt.addresses[0].city;
+      addressesTab[0].id = dt.addresses[0].id;
+      addressesTab[0].number = dt.addresses[0].number;
+      addressesTab[0].name = dt.addresses[0].name;
+      addressesTab[0].zipCode = dt.addresses[0].zipCode;
+      addressesTab[0].country = dt.addresses[0].country;
+      addressesTab[0].complement = dt.addresses[0].complement;
+      addressesTab[0].isFavorite = dt.addresses[0].isFavorite;
+      addressesTab[0].user = dt.addresses[0].user;
+
+      newUser.addresses = addressesTab;
     }
+
+    console.log(user);
+
     setUser(newUser);
     setIsLoading(false);
   };
