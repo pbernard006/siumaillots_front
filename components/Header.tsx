@@ -12,10 +12,10 @@ export default function Header() {
   return (
     <>
       <div className="text-xl">
-        <div className="container mx-auto flex items-start text-center py-8">
+        <div className="container mx-auto flex items-center text-center py-8">
           <div className="w-1/12">
             <Link href={"/"}>
-              <span>logo</span>
+              <img src="/images/siuuu/siuuu_maillots.png" alt="Logo Siuuu maillots" />
             </Link>
           </div>
           <div className="w-9/12 flex items-start">
