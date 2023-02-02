@@ -36,9 +36,6 @@ export default function CommandeEffectuee() {
         }
         );
         const result = await response.json();
-
-        var audio = new Audio('/sounds/gracias_siuuu.mp3');
-        audio.play();
     }
     else {
       router.push("/");
