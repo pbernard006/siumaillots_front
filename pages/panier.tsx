@@ -17,31 +17,31 @@ const josefinSans = Josefin_Sans({
 })
 
 export default function Panier() {
-  const [jerseys, setJerseys] = useState<JerseyFromBasket[]>([])
-  const [addresses, setAdresses] = useState<Address[]>([])
-  const [address, setAdress] = useState<''>()
-  const [basketId, setBasketId] = useState('')
-  const [total, setTotal] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
-  const [isAddressesLoading, setIsAddressesLoading] = useState(true)
-  const token = Cookies.get('token')
-  const route = useRouter()
-  const [failed, setFailed] = useState(true)
-  const [active, setActive] = useState(false)
+  const [jerseys, setJerseys] = useState<JerseyFromBasket[]>([]);
+  const [addresses, setAdresses] = useState<Address[]>([]);
+  const [address, setAdress] = useState<"">();
+  const [basketId, setBasketId] = useState("");
+  const [total, setTotal] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAddressesLoading, setIsAddressesLoading] = useState(true);
+  const token = Cookies.get("token");
+  const route = useRouter();
+  const [failed, setFailed] = useState(true);
+  const [active, setActive] = useState(false);
 
   const isLoggedIn = () => {
     if (!token) {
-      route.push('/connexion')
+      route.push("/connexion");
     }
-  }
+  };
 
   const getStatus = () => {
-    const statusCommand = route.query.status
-    if (statusCommand == 'fail' && failed) {
-      alert('Votre commande a échoué, veuillez essayer plus tard...')
-      setFailed(false)
+    const statusCommand = route.query.status;
+    if (statusCommand == "fail" && failed) {
+      alert("Votre commande a échoué, veuillez essayer plus tard...");
+      setFailed(false);
     }
-  }
+  };
 
   const getJerseys = async () => {
     const response = await fetch(
@@ -85,18 +85,18 @@ export default function Panier() {
       const url = result.url
       Router.push(url)
     } else {
-      alert("Une erreur s'est produite, veuillez essayer plus tard...")
+      alert("Une erreur s&apos;est produite, veuillez essayer plus tard...");
     }
   }
 
   const onChange = (event: any) => {
     const btnPayBasket = document.getElementById(
-      'btnPayBasket',
-    ) as HTMLInputElement | null
+      "btnPayBasket"
+    ) as HTMLInputElement | null;
     if (btnPayBasket) {
-      if (event.target.value != '') {
-        setActive(true)
-        setAdress(event.target.value)
+      if (event.target.value != "") {
+        setActive(true);
+        setAdress(event.target.value);
       } else {
         setActive(false)
       }
@@ -124,7 +124,7 @@ export default function Panier() {
             <h1>
               Votre panier est vide...
               <br />
-              N'hésitez pas à ajouter un SIUUUU maillot !
+              N&apos;hésitez pas à ajouter un SIUUUU maillot !
             </h1>
           </div>
         )}
@@ -157,9 +157,9 @@ export default function Panier() {
                     {addresses.map((address, index) => (
                       <option key={index} value={address.id}>
                         {address.number +
-                          ' ' +
+                          " " +
                           address.name +
-                          ' - ' +
+                          " - " +
                           address.city}
                       </option>
                     ))}

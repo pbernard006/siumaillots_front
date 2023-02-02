@@ -21,7 +21,8 @@ export default function CommandeEffectuee() {
   const validationCommand = async () => {
     const session = {
       stripeCheckout: sessionId,
-    }
+    };
+
     if (sessionId) {
       const token = Cookies.get('token')
       const response = await fetch(
@@ -33,22 +34,22 @@ export default function CommandeEffectuee() {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(session),
-        },
-      )
-      const result = await response.json()
+        }
+      );
+      const result = await response.json();
     } else {
-      router.push('/')
+      router.push("/");
     }
-  }
+  };
 
   const playSiuuu = () => {
-    var audio = new Audio('/sounds/gracias_siuuu.mp3')
-    audio.play()
-  }
+    var audio = new Audio("/sounds/gracias_siuuu.mp3");
+    audio.play();
+  };
 
   useEffect(() => {
-    validationCommand()
-  }, [])
+    validationCommand();
+  }, []);
 
   return (
     <>
@@ -78,9 +79,9 @@ export default function CommandeEffectuee() {
             priority
           />
         </div>
-        <Link href={'/'}>
+        <Link href={"/"}>
           <button className="flex mx-auto bg-black text-white font-bold justify-center rounded-lg w-1/5">
-            Retour à l'accueil
+            Retour à l&apos;accueil
           </button>
         </Link>
       </main>

@@ -1,19 +1,22 @@
 'use client'
 
-import Image from 'next/image'
-import { useEffect } from 'react'
-import carousel1 from '../public/images/carousel/carousel1.png'
-import carousel2 from '../public/images/carousel/carousel2.jpg'
-import carousel3 from '../public/images/carousel/carousel3.jpg'
+import Image from "next/image";
+import { useEffect } from "react";
+import carousel1 from "../public/images/carousel/carousel1.png";
+import carousel2 from "../public/images/carousel/carousel2.jpg";
+import carousel3 from "../public/images/carousel/carousel3.jpg";
+
 
 export default function Carousel() {
   useEffect(() => {
     const use = async () => {
-      ;(await import('tw-elements')).default
-    }
-    use()
-  }, [])
-  const images: string[] = []
+
+      (await require("tw-elements")).default;
+    };
+    use();
+  }, []);
+  const images: string[] = [];
+
   return (
     <div
       id="carouselExampleCaptions"
@@ -86,6 +89,7 @@ export default function Carousel() {
         ></span>
         <span className="visually-hidden">Next</span>
       </button>
-    </div>
-  )
+</div>
+  );
+
 }

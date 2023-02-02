@@ -81,6 +81,14 @@ export default function Button({
         }
       }
     } else {
+      const newUser: User = {
+        email: userEdit.email,
+        firstName: userEdit.firstName,
+        lastName: userEdit.lastName,
+        roles: userEdit.roles,
+        orders: userEdit.orders,
+      };
+
       const response = await fetch(
         process.env.NEXT_PUBLIC_API_HOST + `/users/${id}`,
         {
@@ -89,10 +97,12 @@ export default function Button({
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(userEdit),
-        },
-      )
-      const result = await response.json()
+
+          body: JSON.stringify(newUser),
+        }
+      );
+      const result = await response.json();
+
 
       if (response.status == 200) {
         setIsLoading(true)
