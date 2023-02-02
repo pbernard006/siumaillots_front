@@ -2,14 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  font-family: "Josefin Sans", sans-serif;
+body {
+  font-family: 'Josefin Sans', sans-serif;
 }
-textarea:focus, input:focus{
+textarea:focus,
+input:focus {
   outline: none;
 }
 
-.border-input{
+.border-input {
   border: 2px solid rgb(203 213 225);
 }
 
@@ -18,7 +19,7 @@ textarea:focus, input:focus{
   position: relative;
 }
 .hover-underline-animation:after {
-  content: "";
+  content: '';
   position: absolute;
   width: 100%;
   transform: scaleX(0);
@@ -35,18 +36,18 @@ textarea:focus, input:focus{
   transform-origin: bottom left;
 }
 
-.react-horizontal-scrolling-menu--scroll-container  {
+.react-horizontal-scrolling-menu--scroll-container {
   overflow-x: hidden;
 }
 
-.vertical-center{
+.vertical-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.bg-stadium{
-  background-image: url("/images/background/stadium.jpg");
+.bg-stadium {
+  background-image: url('/images/background/stadium.jpg');
   background-position: center;
 }
 
@@ -64,16 +65,16 @@ textarea:focus, input:focus{
 
 .container-siuuu button {
   margin-bottom: 30px;
-  background-color: #C10000;
+  background-color: #c10000;
   padding: 10px 16px;
   border-radius: 10px;
   font-weight: bold;
   color: white;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .container-siuuu button:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 button {
@@ -81,7 +82,7 @@ button {
 }
 
 button:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 select {

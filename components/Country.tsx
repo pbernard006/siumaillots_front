@@ -1,6 +1,14 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-export function Country({name, src, link}: { name: string; src: string; link: string}) {
+export function Country({
+  name,
+  src,
+  link,
+}: {
+  name: string
+  src: string
+  link: string
+}) {
   return (
     <Link href={link} className="flex items-center justify-center">
       <img
@@ -11,5 +19,5 @@ export function Country({name, src, link}: { name: string; src: string; link: st
         className="w-auto h-3/4"
       />
     </Link>
-  );
+  )
 }

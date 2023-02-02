@@ -1,13 +1,13 @@
-import Head from "next/head";
-import { Josefin_Sans } from "@next/font/google";
-import Header from "../components/Header";
-import HubLogin from "../components/HubLogin";
+import Head from 'next/head'
+import { Josefin_Sans } from '@next/font/google'
+import Header from '../components/Header'
+import HubLogin from '../components/HubLogin'
 
 const josefinSans = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["300"],
-  display: "swap",
-});
+  subsets: ['latin'],
+  weight: ['300'],
+  display: 'swap',
+})
 
 export default function Connexion() {
   return (
@@ -23,5 +23,5 @@ export default function Connexion() {
         <HubLogin />
       </main>
     </>
-  );
+  )
 }

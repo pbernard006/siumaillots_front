@@ -1,49 +1,49 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Josefin_Sans } from "@next/font/google";
-import styles from "../styles/Home.module.css";
-import Header from "../components/Header";
-import HorizontalList from "../components/HorizontalList";
-import ImagesHomepage from "../components/ImagesHomepage";
-import { UserContext } from "../contexts/UserContext";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import Carousel from "../components/Carousel";
-import { useContext, useEffect, useState } from "react";
-import { Jersey } from "../models/Jersey";
-
+import Head from 'next/head'
+import Image from 'next/image'
+import { Josefin_Sans } from '@next/font/google'
+import styles from '../styles/Home.module.css'
+import Header from '../components/Header'
+import HorizontalList from '../components/HorizontalList'
+import ImagesHomepage from '../components/ImagesHomepage'
+import { UserContext } from '../contexts/UserContext'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import Carousel from '../components/Carousel'
+import { useContext, useEffect, useState } from 'react'
+import { Jersey } from '../models/Jersey'
 
 const josefinSans = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["300"],
-  display: "swap",
-});
+  subsets: ['latin'],
+  weight: ['300'],
+  display: 'swap',
+})
 
 export default function Home() {
   const getUsers = async () => {
-    const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/users", {
-      method: "GET",
-    });
-    const dt = await response.json();
-  };
+    const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + '/users', {
+      method: 'GET',
+    })
+    const dt = await response.json()
+  }
 
-
-  const [bestSales, setBestSales] = useState<Jersey[]>([]);
-  const [isBestSalesLoading, setIsBestSalesLoading] = useState(true);
+  const [bestSales, setBestSales] = useState<Jersey[]>([])
+  const [isBestSalesLoading, setIsBestSalesLoading] = useState(true)
 
   const getBestSales = async () => {
-    const response = await fetch(process.env.NEXT_PUBLIC_API_HOST + "/best-sales", {
-      method: "GET",
-    });
-    const dt = await response.json();
-    setBestSales(dt);
-    setIsBestSalesLoading(false);
-  };
-
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_HOST + '/best-sales',
+      {
+        method: 'GET',
+      },
+    )
+    const dt = await response.json()
+    setBestSales(dt)
+    setIsBestSalesLoading(false)
+  }
 
   useEffect(() => {
-    getUsers();
-    getBestSales();
-  }, []);
+    getUsers()
+    getBestSales()
+  }, [])
 
   return (
     <>
@@ -57,10 +57,10 @@ export default function Home() {
         <Header />
         <Carousel />
         {!isBestSalesLoading && bestSales && (
-          <HorizontalList title="Meilleures ventes" jerseys={bestSales}/>
-          )}
+          <HorizontalList title="Meilleures ventes" jerseys={bestSales} />
+        )}
         <ImagesHomepage />
       </main>
     </>
-  );
+  )
 }

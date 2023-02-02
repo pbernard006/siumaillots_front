@@ -1,76 +1,76 @@
-import Head from "next/head";
-import React from "react";
-import { Josefin_Sans } from "@next/font/google";
-import Header from "../components/Header";
-import { useEffect, useState } from "react";
-import { Jersey } from "../models/Jersey";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie";
-import Router from "next/router";
+import Head from 'next/head'
+import React from 'react'
+import { Josefin_Sans } from '@next/font/google'
+import Header from '../components/Header'
+import { useEffect, useState } from 'react'
+import { Jersey } from '../models/Jersey'
+import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
+import Router from 'next/router'
 
 const josefinSans = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["300"],
-  display: "swap",
-});
+  subsets: ['latin'],
+  weight: ['300'],
+  display: 'swap',
+})
 
 export default function Maillot() {
-  const [jersey, setJersey] = useState<Jersey>();
-  const [isLoading, setIsLoading] = useState(true);
+  const [jersey, setJersey] = useState<Jersey>()
+  const [isLoading, setIsLoading] = useState(true)
 
-  const [size, setSize] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [size, setSize] = useState('')
+  const [quantity, setQuantity] = useState('')
 
-  const token = Cookies.get("token");
-  const route = useRouter();
+  const token = Cookies.get('token')
+  const route = useRouter()
 
-  const { asPath } = useRouter();
-  let jerseyId = asPath.split("id=")[1];
+  const { asPath } = useRouter()
+  let jerseyId = asPath.split('id=')[1]
 
   const getJersey = async () => {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_HOST + "/jerseys/" + jerseyId,
+      process.env.NEXT_PUBLIC_API_HOST + '/jerseys/' + jerseyId,
       {
-        method: "GET",
-      }
-    );
-    const dt = await response.json();
-    setJersey(dt);
-    setIsLoading(false);
-  };
+        method: 'GET',
+      },
+    )
+    const dt = await response.json()
+    setJersey(dt)
+    setIsLoading(false)
+  }
 
   useEffect(() => {
-    getJersey();
-  }, []);
+    getJersey()
+  }, [])
 
   const addToBasket = async () => {
     if (!token) {
-      route.push('/connexion');
+      route.push('/connexion')
     }
     if (!size || !quantity) {
-      alert('Veuillez saisir une taille une quantité');
+      alert('Veuillez saisir une taille une quantité')
     } else {
       const product = {
         jerseyId: jerseyId,
         size: size,
         quantity: quantity,
-      };
+      }
 
       const response = await fetch(
-        process.env.NEXT_PUBLIC_API_HOST + "/basket/add/jersey",
+        process.env.NEXT_PUBLIC_API_HOST + '/basket/add/jersey',
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(product),
-        }
-      );
-      const result = await response.json();
-      Router.push('/panier');
+        },
+      )
+      const result = await response.json()
+      Router.push('/panier')
     }
-  };
+  }
 
   return (
     <>
@@ -140,5 +140,5 @@ export default function Maillot() {
         )}
       </main>
     </>
-  );
+  )
 }
