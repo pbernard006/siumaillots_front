@@ -85,7 +85,9 @@ export default function Maillots(){
     
     useEffect(() => {
         if (!search) {
-            getJerseysByTeams(id);
+            if(isCountry) {
+                getJerseysByTeams(id);
+            }
             getJerseysByCompetition();
             getTeamsByCompetition();
         }
