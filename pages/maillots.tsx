@@ -132,7 +132,7 @@ export default function Maillots() {
           </div>
         )}
 
-        {!isJerseysLoading && (
+        {!isJerseysLoading && jerseysList &&(
           <div className="grid grid-cols-5 gap-y-5 ml-20 justify-around text-center">
             {jerseysList.map((jersey, index) => (
               <Card
@@ -143,6 +143,12 @@ export default function Maillots() {
                 price={jersey.price}
               />
             ))}
+          </div>
+        )}
+
+        {!isJerseysLoading && jerseysList.length == 0 &&(
+          <div className="mt-20 text-center mx-auto">
+            <p>Nous sommes désolé, aucun siu maillot ne correspond à votre recherche.</p>
           </div>
         )}
       </main>
